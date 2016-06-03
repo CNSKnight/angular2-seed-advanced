@@ -1,0 +1,41 @@
+<li class="collection-item" *ngFor="let recipe of recipes" (click)="selected.emit(recipe)"
+  class="recipe-card">
+    <div>
+      <a href="#!" class="secondary-content"><i class="material-icons">send</i></a>
+    </div>
+    <div>
+      <h2>{{recipe.title}}</h2>
+    </div>
+    <ul class="list-inline">
+      <li *ngFor="let tag of recipe.tags">
+        <span class="label label-warning">
+          #{{tag.name}}
+        </span>
+      </li>
+    </ul>
+    <div>
+      <rating [interactive]="false" [rate]="recipe.rating"></rating>
+      {{recipe.rating}}
+    </div>
+    <div>
+      {{recipe.creator}}
+    </div>
+    <div>
+      {{recipe.description}}
+    </div>
+    <ul>
+      <li *ngFor="let ingredient of recipe.ingredients">
+        {{ingredient.qty}} {{ingredient.unit}} {{ingredient.name}}
+      </li>
+    </ul>
+    <ol>
+      <li *ngFor="let method of recipe.method">
+        {{method.step}}
+      </li>
+    </ol>
+    <div>
+      <button (click)="deleted.emit(recipe); $event.stopPropagation();">
+        <i>close</i>
+      </button>
+    </div>
+</li>

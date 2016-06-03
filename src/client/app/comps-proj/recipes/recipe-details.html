@@ -1,0 +1,133 @@
+<div class="recipe-card">
+  <div>
+    <h2 *ngIf="recipe._id">Editing {{originalTitle}}</h2>
+    <h2 *ngIf="!recipe._id">Create New Recipe</h2>
+  </div>
+  <form novalidate>
+    <div class="row">
+      <div class="input-field col s12">
+        <label>Recipe Title</label>
+        <input [(ngModel)]="recipe.title"
+          placeholder="Name Your Recipe" type="text">
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <label>Original Creator</label>
+        <input [(ngModel)]="recipe.creator"
+          placeholder="Enter Creator Name" type="text">
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <label>Description</label>
+        <input [(ngModel)]="recipe.description"
+          placeholder="Enter a description" type="text">
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <rating-comp-tbc></rating-comp-tbc>
+        <div *ngIf="1==2">
+          <label>Rating</label>
+          <rating [interactive]="true" [rate]="recipe.rating"
+            (updateRate)="onUpdate($event)"></rating>
+          <input [(ngModel)]="recipe.rating"
+            placeholder="Enter a rating" type="text">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <fieldset class="col s12">
+        <legend>Ingredients</legend>
+        <div *ngFor="let ingredient of recipe.ingredients">
+          <div class="row">
+            <div class="input-field col s12 m2">
+              <input [(ngModel)]="ingredient.qty"
+                placeholder="qty?" type="text">
+            </div>
+            <div class="input-field col s12 m2">
+              <input [(ngModel)]="ingredient.unit"
+                placeholder="Units?" type="text">
+            </div>
+            <div class="input-field col s12 m6">
+              <input [(ngModel)]="ingredient.name"
+                placeholder="Name?" type="text">
+            </div>
+            <div class="input-field col s12 m2">
+              <button class="btn-flat btn-sm">
+                <i class="material-icons"
+                 (click)="deleteIngredient(ingredient)">delete</i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 center-align">
+            <button class="btn btn-sm" (click)="newIngredient()">
+              <i class="material-icons">add</i>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="row">
+      <fieldset class="col s12">
+        <legend>Method Steps</legend>
+        <div class="row" *ngFor="let method of recipe.method">
+           <div class="input-field col s12 m10">
+              <input [(ngModel)]="method.step"
+                placeholder="Enter a step" type="text">
+            </div>
+            <div class="input-field col s12 m2">
+              <button class="btn-flat btn-sm">
+                <i class="material-icons"
+                 (click)="deleteIngredient(ingredient)">delete</i>
+              </button>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col s12 center-align">
+            <button class="btn btn-sm" (click)="newMethod()">
+              <i class="material-icons">add</i>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="row">
+      <fieldset class="col s12">
+        <legend>Tags</legend>
+        <div class="row">
+          <div *ngFor="let tag of recipe.tags">
+            <div class="input-field col s12 m10">
+              <input [(ngModel)]="tag.name" placeholder="Enter a tag"
+            type="text">
+            </div>
+            <div class="input-field col s12 m2">
+              <button class="btn-flat btn-sm" (click)="deleteTag(tag)">
+                <i class="material-icons"
+                 (click)="deleteIngredient(ingredient)">delete</i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12 center-align">
+            <button class="btn btn-sm" (click)="newTag()">
+              <i class="material-icons">add</i>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </form>
+  <div>
+    <button class="btn-flat left" type="submit" (click)="cancelled.emit(recipe)">
+      Cancel
+    </button>
+    <button class="btn right" type="submit" (click)="saved.emit(recipe)">
+      Save
+    </button>
+  </div>
+</div>
