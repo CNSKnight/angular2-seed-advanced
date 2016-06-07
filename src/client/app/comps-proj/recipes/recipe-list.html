@@ -1,4 +1,4 @@
-<li class="collection-item" *ngFor="let recipe of recipesR" (click)="selected.emit(recipe)">
+<li class="collection-item" *ngFor="let recipe of recipesR" (click)="selectUA.emit(recipe)">
     <div>
         <span class="secondary-content left">
             <i class="material-icons amber-text text-lighten-2" *ngIf="! recipe.published">visibility_off</i>

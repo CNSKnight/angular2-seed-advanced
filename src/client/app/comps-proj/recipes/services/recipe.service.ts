@@ -45,7 +45,7 @@ export class RecipeService {
       // map the `HTTP` response from `raw` to `JSON` format
       // using `RxJs`
       // Reference: https://github.com/Reactive-Extensions/RxJS
-      .map((res: Response) => res.json())
+      .map((res:Response) => res.json())
       // call `map` again to create the object we want to dispatch
       // to our reducer
       // This combo of `map` method calls is an observable sequence
@@ -57,24 +57,25 @@ export class RecipeService {
       .subscribe(action => this.store.dispatch(action));
   }
 
-  saveRecipe(recipe: RecipeI) {
+  saveRecipe(recipe:RecipeI) {
     (recipe._id) ? this.updateRecipe(recipe) : this.createRecipe(recipe);
   }
 
-  createRecipe(recipe: RecipeI) {
+  createRecipe(recipe:RecipeI) {
     this.http.post(this.apiBase, JSON.stringify(recipe), HEADER)
       .map(res => res.json())
       .map(payload => ({ type: 'CREATE_RECIPE', payload }))
       .subscribe(action => this.store.dispatch(action));
   }
 
-  updateRecipe(recipe: RecipeI) {
+  updateRecipe(recipe:RecipeI) {
     this.http.put(`${this.apiBase}/${recipe._id}`, JSON.stringify(recipe), HEADER)
       // Dispatch action to reducer in subscribe block here
       .subscribe(action => this.store.dispatch({ type: 'UPDATE_RECIPE', payload: recipe }));
   }
 
-  deleteRecipe(recipe: RecipeI) {
+  deleteRecipe(recipe:RecipeI, target:any) {
+    debugger;
     this.http.delete(`${this.apiBase}/${recipe._id}`)
       .subscribe(action => this.store.dispatch({ type: 'DELETE_RECIPE', payload: recipe }));
   }

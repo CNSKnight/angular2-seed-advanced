@@ -129,7 +129,7 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
 
   onUpdate(value: number) {
 
-    // Set the value of the selected recipe's rating to the
+    // Set the value of the selectUA recipe's rating to the
     // value passed up from the `rating` component
     this.recipe.rating = value;
    }

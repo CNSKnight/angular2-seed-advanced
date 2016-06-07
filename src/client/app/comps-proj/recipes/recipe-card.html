@@ -1,4 +1,4 @@
-<li class="card" style="overflow: hidden;" *ngFor="let recipe of recipesR" (click)="selected.emit(recipe)">
+<li class="card" style="overflow: hidden;" *ngFor="let recipe of recipesR" (click)="selectUA.emit(recipe)">
     <div class="card-image waves-effect waves-block waves-light">
         <img class="activator" src="images/office.jpg">
     </div>
@@ -13,7 +13,7 @@
     </div>
     <div class="card-action">
         <a href="#">This is a link</a>
-        <a href="#" (click)="deleted.emit(recipe); $event.stopPropagation();"><i class="material-icons">delete_forever</i></a>
+        <a href="#" (click)="deleteUA.emit(recipe); $event.stopPropagation();"><i class="material-icons">delete_forever</i></a>
     </div>
     <div class="card-reveal" style="display: none; transform: translateY(0px);">
         <span class="card-title grey-text text-darken-4">Card Title <i class="material-icons right">close</i></span>
@@ -23,7 +23,7 @@
         </div>
         <div>
             <div class="chip" *ngFor="let tag of recipe.tags">
-                {{tag.name}} <i class="material-icons" (click)="deleted.emit(recipe, {tag: tag}); $event.stopPropagation();">close</i>
+                {{tag.name}}
             </div>
         </div>
         <div>

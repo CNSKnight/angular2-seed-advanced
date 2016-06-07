@@ -76,7 +76,7 @@
         <legend>Method Steps</legend>
         <div class="row" *ngFor="let method of recipe.method">
           <div class="input-field col s12 m10">
-            <input [(ngModel)]="method.step" placeholder="Enter a step" type="text">
+            <textarea [(ngModel)]="method.step" placeholder="Enter a step"></textarea>
           </div>
           <div class="input-field col s12 m2">
             <button class="btn-flat btn-sm">

@@ -39,9 +39,9 @@ export class RecipeCardsComponent implements OnChanges {
   // `recipesS` property with `@Input()`
   @Input() recipesR:RecipeI[];
 
-  // Two event outputs for when a recipe is selected or deleted
-  @Output() selected = new EventEmitter();
-  @Output() deleted = new EventEmitter();
+  // Two event outputs for when a recipe is selectUA or deleteUA
+  @Output() selectUA = new EventEmitter();
+  @Output() deleteUA = new EventEmitter();
 
   ngOnChanges(changed:any) {
   }

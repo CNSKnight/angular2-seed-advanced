@@ -1,6 +1,6 @@
 import { recipes } from './recipes.reducer';
 
-import { selectedRecipe } from './selected-recipe.reducer';
+import { selectedRecipe } from './selectUA-recipe.reducer';
 
 import {
   it,

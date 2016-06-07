@@ -11,10 +11,10 @@
             </li>
             <!-- [target]="source | async" -->
             <!-- apparently because passing into external template, all must match -->
-            <recipe-list *ngIf="! showCards" [recipesR]="recipesR | async" (selected)="selectRecipe($event)" (deleted)="deleteRecipe($event)">
+            <recipe-list *ngIf="! showCards" [recipesR]="recipesR | async" (selectUA)="selectRecipe($event)" (deleteUA)="deleteRecipe($event)">
               <div idkyet>{{'Recipes Loading'}}...</div>
             </recipe-list>
-            <recipe-cards *ngIf="showCards" [recipesR]="recipesR | async" (selected)="selectRecipe($event)" (deleted)="deleteRecipe($event)">
+            <recipe-cards *ngIf="showCards" [recipesR]="recipesR | async" (selectUA)="selectRecipe($event)" (deleteUA)="deleteRecipe($event)">
             </recipe-cards>
         </ul>
     </div>
