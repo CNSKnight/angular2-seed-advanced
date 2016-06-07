@@ -26,27 +26,31 @@ import { RecipeI } from './services/recipe.store';
 
 import { Rating } from './rating.component';
 
+import {MaterializeDirective} from "angular2-materialize";
+
 @Component({
   moduleId: module.id,
   selector: 'recipe-detail',
   templateUrl: 'recipe-details.html',
-  styleUrls: ['recipe-details.component.css'],
-  directives: [Rating]
+  // directives: [Rating]
+  directives: [MaterializeDirective, Rating]
  })
 export class RecipeDetailsComponent implements OnInit, OnChanges {
 
   originalTitle: string;
-  selectedRecipeR: RecipeI; // binder matches inherited property
+  selectedRecipeR:RecipeI; // binder matches inherited property
+  recipe:RecipeI;
+  test:RecipeI;
 
   // Assign our `recipe` to a locally scoped property
   // Perform additional logic on every update via ES6 setter
   // Create a copy of `_recipe` and assign it to `this.selectedRecipe`
   // to which we will use to bind our form
+  @Input('test') selectedRecipeR:RecipeI;
   @Input('selectedRecipeR')
   set _selectedRecipeR(val:RecipeI) {
-    debugger;
     val && (this.originalTitle = val.title);
-    this.selectedRecipeR = Object.assign({}, val || {});
+    this.recipe = Object.assign({}, val || {});
 
     // DEBUG
     console.log('RecipeDetailsComponent.recipe: ', this.selectedRecipeR);

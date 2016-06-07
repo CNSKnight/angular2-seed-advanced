@@ -27,12 +27,12 @@ import { Rating } from './rating.component';
 
 @Component({
   moduleId: module.id,
-  selector: 'recipe-list',
-  templateUrl: 'recipe-list.html',
+  selector: 'recipe-cards',
+  templateUrl: 'recipe-card.html',
   directives: [Rating]
  })
 
-export class RecipeListComponent implements OnChanges { 
+export class RecipeCardsComponent implements OnChanges { 
   // The RecipesComponent hands off `recipesS` (and `selectedRecipeS`)
   // via property bindings to its child components
   // Here we pick up the `recipesS` collection by annotating our local

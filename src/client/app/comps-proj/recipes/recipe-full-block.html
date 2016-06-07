@@ -1,0 +1,48 @@
+<li class="" *ngFor="let recipe of recipesR" (click)="selected.emit(recipe)">
+    <div class="row">
+      <h2>{{recipe.title}}</h2>
+    </div>
+
+    <div class="row">
+      <rating [interactive]="false" [rate]="recipe.rating"></rating>
+      {{recipe.rating}}
+    </div>
+
+    <div class="row">
+      <div class="chip" *ngFor="let tag of recipe.tags">
+        {{tag.name}} <i class="material-icons" (click)="deleted.emit(recipe, {tag: tag}); $event.stopPropagation();">close</i>
+      </div>
+    </div>
+    
+    <div class="row">
+      Created by: {{recipe.creator}}
+    </div>
+
+    <div class="row">
+      {{recipe.description}}
+    </div>
+
+    <div class="row">
+    Ingredients:
+      <ul>
+        <li *ngFor="let ingredient of recipe.ingredients">
+          {{ingredient.qty}} {{ingredient.unit}} {{ingredient.name}}
+        </li>
+      </ul>
+    </div>
+
+    <div class="row">
+    Steps:
+      <ol>
+        <li *ngFor="let method of recipe.method">
+          {{method.step}}
+        </li>
+      </ol>
+    </div>
+
+    <div class="row">
+      <button class="btn-flat right" (click)="deleted.emit(recipe); $event.stopPropagation();">
+        <i class="material-icons">delete_forever</i>
+      </button>
+    </div>
+</li>

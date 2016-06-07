@@ -14,6 +14,7 @@ import {
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
+  ViewEncapsulation
 } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
@@ -23,17 +24,19 @@ import { AppStoreI } from '../../frameworks/app.framework/index';
 
 import { RecipeI } from './services/recipe.store';
 import { RecipeService } from './services/recipe.service';
-import { RecipeDetailsComponent } from './recipe-details.component';
 import { RecipeListComponent } from './recipe-list.component';
+import { RecipeCardsComponent } from './recipe-cards.component';
+import { RecipeDetailsComponent } from './recipe-details.component';
 
 @Component({
   moduleId: module.id,
   selector: 'recipes',
   providers: [],
   templateUrl: 'recipes.html',
-  styleUrls: [],
-  directives: [RecipeListComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  directives: [RecipeListComponent, RecipeCardsComponent, RecipeDetailsComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['shared/recipes.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 // snippets: https://marketplace.visualstudio.com/items?itemName=johnpapa.@angular
 export class RecipesComponent implements OnInit, OnChanges {
@@ -41,9 +44,12 @@ export class RecipesComponent implements OnInit, OnChanges {
 
   selectedRecipeR: Observable<RecipeI>;
 
+  showCards: boolean = false;
+
   constructor(private recipesService: RecipeService, // so that we can loadRecipes below
               private store: Store<AppStoreI>) {
-
+    // this.showCards = false;
+  
     // Bind to the subscribed `recipesR` ~observable~ behavior subject from the store
     this.recipesR = recipesService.recipesR;
     // this.recipesR = store.select('recipesR');
@@ -65,6 +71,12 @@ export class RecipesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changed:any) {
+  }
+
+  toggle(what:string) {
+    if (what == 'cards') {
+      this.showCards = (this.showCards ? false : true);
+    }
   }
 
   selectRecipe(recipe:RecipeI) {
