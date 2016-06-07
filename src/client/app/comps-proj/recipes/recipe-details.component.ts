@@ -83,10 +83,10 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
 
     // Check to see if the `tags` array exists before
     // attempting to push a `tag` to it
-    if (!this.selectedRecipeR.tags)
-      this.selectedRecipeR.tags = [];
+    if (!this.recipe.tags)
+      this.recipe.tags = [];
 
-    this.selectedRecipeR.tags.push(tag);
+    this.recipe.tags.push(tag);
    }
 
   // Whenever the user needs to add a new `ingredient`, push an
@@ -103,10 +103,10 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
 
     // Check to see if the `ingredients` array exists before
     // attempting to push an `ingredient` to it
-    if (!this.selectedRecipeR.ingredients)
-      this.selectedRecipeR.ingredients = [];
+    if (!this.recipe.ingredients)
+      this.recipe.ingredients = [];
 
-    this.selectedRecipeR.ingredients.push(ingredient);
+    this.recipe.ingredients.push(ingredient);
    }
 
   // Whenever the user needs to add a new `method`, push an
@@ -121,51 +121,51 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
 
     // Check to see if the `method` array exists before
     // attempting to push a `method` to it
-    if (!this.selectedRecipeR.method)
-      this.selectedRecipeR.method = [];
+    if (!this.recipe.method)
+      this.recipe.method = [];
 
-    this.selectedRecipeR.method.push(method);
+    this.recipe.method.push(method);
    }
 
   onUpdate(value: number) {
 
     // Set the value of the selected recipe's rating to the
     // value passed up from the `rating` component
-    this.selectedRecipeR.rating = value;
+    this.recipe.rating = value;
    }
 
   deleteTag(tag: string) {
     // loop through all of the `tags` in the `selectedRecipe`
-    for (let i = 0; i < this.selectedRecipeR.tags.length; i++) {
+    for (let i = 0; i < this.recipe.tags.length; i++) {
       // if the `tag` at the current index matches that of the one
       // the user is trying to delete
-      if (this.selectedRecipeR.tags[i] === tag) {
+      if (this.recipe.tags[i] === tag) {
         // delete the `tag` at the current index
-        this.selectedRecipeR.tags.splice(i, 1);
+        this.recipe.tags.splice(i, 1);
        }
      }
    }
 
   deleteIngredient(ingredient: number) {
     // loop through all of the `ingredients` in the `selectedRecipe`
-    for (let i = 0; i < this.selectedRecipeR.ingredients.length; i++) {
+    for (let i = 0; i < this.recipe.ingredients.length; i++) {
       // if the `ingredient` at the current index matches that of the one
       // the user is trying to delete
-      if (this.selectedRecipeR.ingredients[i] === ingredient) {
+      if (this.recipe.ingredients[i] === ingredient) {
         // delete the `ingredient` at the current index
-        this.selectedRecipeR.ingredients.splice(i, 1);
+        this.recipe.ingredients.splice(i, 1);
        }
      }
    }
 
   deleteMethod(step: number) {
     // loop through all of the `method` in the `selectedRecipe`
-    for (let i = 0; i < this.selectedRecipeR.method.length; i++) {
+    for (let i = 0; i < this.recipe.method.length; i++) {
       // if the `method` at the current index matches that of the one
       // the user is trying to delete
-      if (this.selectedRecipeR.method[i] === step) {
+      if (this.recipe.method[i] === step) {
         // delete the `method` at the current index
-        this.selectedRecipeR.method.splice(i, 1);
+        this.recipe.method.splice(i, 1);
        }
      }
    }

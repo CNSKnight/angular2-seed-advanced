@@ -12,17 +12,22 @@ export class ProjectConfig extends SeedAdvancedConfig {
 
   constructor() {
     super();
-    // this.APP_TITLE = 'Put name of your app here';
+    this.APP_TITLE = 'Steeve\'s App (in project.config)';
     let additional_deps: InjectableDependency[] = [
-      // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
+      {src: 'jquery/dist/jquery.min.js', inject: 'libs'}
     ];
 
     const seedDependencies = this.NPM_DEPENDENCIES;
-
     this.NPM_DEPENDENCIES = seedDependencies.concat(additional_deps);
 
     /* Add to or override NPM module configurations: */
     //this.mergeObject( this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false } );
 
+    this.SYSTEM_CONFIG.map = this.SYSTEM_CONFIG.map || {};
+    this.SYSTEM_CONFIG.map['materialize'] = `${this.APP_BASE}node_modules/materialize-css`;
+    this.SYSTEM_CONFIG.map['angular2-materialize'] = `${this.APP_BASE}node_modules/angular2-materialize`;
+    this.SYSTEM_CONFIG.map['jquery'] = `${this.APP_BASE}node_modules/jquery`;
+    this.SYSTEM_CONFIG.map['$'] = 'jquery';
+    this.SYSTEM_CONFIG.map['window.jQuery'] = 'jquery';
   }
 }

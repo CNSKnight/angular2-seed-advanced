@@ -42,6 +42,15 @@ export function systemJsPackages() {
     },
     'rxjs': {
       defaultExtension: 'js'
+    },
+    'materialize': {
+      format: 'global',
+      main: 'dist/js/materialize',
+      defaultExtension: 'js'
+    },
+    'angular2-materialize': {
+      main: 'dist/index',
+      defaultExtension: 'js'
     }
   };
 }

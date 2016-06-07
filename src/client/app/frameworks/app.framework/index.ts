@@ -12,6 +12,8 @@ import { RecipeService } from '../../comps-proj/recipes/services/recipe.service'
 import { recipesReducer } from '../../comps-proj/recipes/services/recipes.reducer';
 import { selectedRecipeReducer } from '../../comps-proj/recipes/services/selected-recipe.reducer';
 
+import "angular2-materialize";
+
 // state definition
 export interface AppStoreI {
   i18n: MultilingualStateI;
