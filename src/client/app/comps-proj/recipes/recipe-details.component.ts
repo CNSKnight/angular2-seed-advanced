@@ -32,7 +32,7 @@ import { RecipeI } from './services/recipe.store';
 
 import { Rating } from './rating.component';
 
-import {MaterializeDirective} from "angular2-materialize";
+import { MaterializeDirective } from "angular2-materialize";
 
 @Component({
   moduleId: module.id,
@@ -198,7 +198,7 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
 
       recipe.tags = fTags;
     }
-    
+
     next && next.emit && next.emit(recipe);
   }
 
