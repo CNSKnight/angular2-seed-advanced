@@ -2,9 +2,11 @@
 import {provideStore} from '@ngrx/store';
 
 // app
-import {HTTP_PROVIDERS} from '@angular/http';
-import {nameListReducer} from './services/name-list.service';
-import {MULTILINGUAL_PROVIDERS, MultilingualStateI, multilingualReducer} from '../i18n.framework/index';
+import { Provider } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
+import { AppConfigService } from './services/app-config.service';
+import { nameListReducer } from './services/name-list.service';
+import { MULTILINGUAL_PROVIDERS, MultilingualStateI, multilingualReducer } from '../i18n.framework/index';
 
 // app local
 import { RecipeI } from '../../comps-proj/recipes/services/recipe.store';
@@ -31,7 +33,8 @@ export const APP_PROVIDERS: any[] = [
     names: nameListReducer,
     recipesR: recipesReducer,
     selectedRecipeR: selectedRecipeReducer
-  })
+  }),
+  new Provider('APPLICATION_OPTIONS', {useValue: AppConfigService.APPLICATION_OPTIONS})
 ];
 
 // services

@@ -4,7 +4,7 @@
 // blackshuriken@hotmail.com
 // selectUA-recipe.reducer.js may be freely distributed under the MIT license
 // ```
-
+import { AppConfigService } from '../../../frameworks/app.framework/services/app-config.service';
 // # Redux interface/reducer for `recipes`
 
 // The `selectUA recipe` reducer handles the currently
@@ -17,13 +17,12 @@ export const selectedRecipeReducer = (state: any = null, {type, payload}) => {
   console.log('state: ', state);
 
   switch (type) {
-
-    // When an `event` from our store is dispatched with an action
-    // type of `SELECT_RECIPE`, it will hit this switch case
+    case 'CREATE_RECIPE':
+    case 'UPDATE_RECIPE':
+      return (AppConfigService.APPLICATION_OPTIONS.recipeDetailsFormInitsOnSubmit ? state : payload);
+      // return payload;
     case 'SELECT_RECIPE':
-    case 'UPDATE_RECIPE'
       return payload;
-      break;
     default:
       return state;
   }
