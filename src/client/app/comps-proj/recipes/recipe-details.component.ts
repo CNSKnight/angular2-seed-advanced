@@ -16,7 +16,13 @@ import {
   OnInit,
   OnChanges
  } from '@angular/core';
-
+import {
+  FormBuilder,
+  Validators,
+  Control,
+  ControlGroup,
+  FORM_DIRECTIVES
+} from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
@@ -42,6 +48,9 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
   recipe:RecipeI;
   test:RecipeI;
 
+  form: ControlGroup;
+  title: Control;
+
   // Assign our `recipe` to a locally scoped property
   // Perform additional logic on every update via ES6 setter
   // Create a copy of `_recipe` and assign it to `this.selectedRecipe`
@@ -58,24 +67,35 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
 
   // Allow the user to save/delete a `recipe or cancel the
   // operation. Flow events up from here.
-  @Output() saved = new EventEmitter();
-  @Output() cancelled = new EventEmitter();
+  @Output() saveUA = new EventEmitter();
+  @Output() cancelUA = new EventEmitter();
 
-  constructor() {
+  constructor(private builder: FormBuilder) {
+    this.title = new Control('', Validators.required);
+    this.form = builder.group({
+      title:  this.title
+    });
   }
 
   ngOnInit() {
-
   }
 
   ngOnChanges(changed:any) {
+  }
+
+  // get textarea ID
+  getTAID(id, idx) {
+    return (id | 'newID')+'-rTA-'+(idx+1);
+  }
+
+  getTALabel(idx) {
+    return 'Step #'+(idx+1).toString().padStart(2, 0);
   }
 
   // Whenever the user needs to add a new `tag`, push an
   // empty `tag` object to the `tags` array on the
   // `selectedRecipe`
   newTag() {
-
     // blank `tag` object
     let tag = {
       name: ''
@@ -83,8 +103,7 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
 
     // Check to see if the `tags` array exists before
     // attempting to push a `tag` to it
-    if (!this.recipe.tags)
-      this.recipe.tags = [];
+    this.recipe.tags || (this.recipe.tags = []);
 
     this.recipe.tags.push(tag);
    }
@@ -93,7 +112,6 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
   // empty `ingredient` object to the `ingredient` array on the
   // `selectedRecipe`
   newIngredient() {
-
     // blank `ingredient` object
     let ingredient = {
       qty: '',
@@ -113,7 +131,6 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
   // empty `method` object to the `method` array on the
   // `selectedRecipe`
   newMethod() {
-
     // blank `method` object
     let method = {
       step: ''
@@ -127,8 +144,7 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
     this.recipe.method.push(method);
    }
 
-  onUpdate(value: number) {
-
+  onChangeRate(value: number) {
     // Set the value of the selectUA recipe's rating to the
     // value passed up from the `rating` component
     this.recipe.rating = value;
@@ -169,4 +185,21 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
        }
      }
    }
+
+  /*
+  * @todo remove empty or blacklisted tags or blacklisted chars
+  */
+  onSubmit(recipe:RecipeI, next) {
+    // validate submitted tags
+    if (recipe.tags && recipe.tags.length) {
+      let fTags = recipe.tags.filter((item, idx, ary) => {
+      return !! item.name.trim().length;
+      });
+
+      recipe.tags = fTags;
+    }
+    
+    next && next.emit && next.emit(recipe);
+  }
+
  }

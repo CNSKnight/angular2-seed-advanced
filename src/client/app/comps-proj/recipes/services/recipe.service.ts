@@ -74,8 +74,7 @@ export class RecipeService {
       .subscribe(action => this.store.dispatch({ type: 'UPDATE_RECIPE', payload: recipe }));
   }
 
-  deleteRecipe(recipe:RecipeI, target:any) {
-    debugger;
+  deleteRecipe(recipe:RecipeI) {
     this.http.delete(`${this.apiBase}/${recipe._id}`)
       .subscribe(action => this.store.dispatch({ type: 'DELETE_RECIPE', payload: recipe }));
   }

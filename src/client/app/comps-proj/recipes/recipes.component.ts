@@ -99,6 +99,7 @@ export class RecipesComponent implements OnInit, OnChanges {
       method: [],
       published: false,
       rating: null,
+      subTitle: '',
       tags: [],
       title: ''
     };

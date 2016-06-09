@@ -3,7 +3,7 @@
     <h2 *ngIf="recipe._id">Editing {{originalTitle}}</h2>
     <h2 *ngIf="! recipe._id">Create New Recipe</h2>
   </div>
-  <form novalidate>
+  <form [ngFormModel]="form" (ngSubmit)="onSubmit(recipe, saveUA)">
     <div class="center-align">
       <div class="switch">
         <label>
@@ -13,31 +13,46 @@
         </label>
       </div>
     </div>
+    
     <div class="row">
       <div class="input-field col s12">
+        <input class="validate" [(ngModel)]="recipe.title" placeholder="Recipe Name/Title" type="text"
+         ngControl="title" required>
         <label>Recipe Title</label>
-        <input [(ngModel)]="recipe.title" placeholder="Name Your Recipe" type="text">
+        <div *ngIf="title.dirty && ! title.valid">
+           <p class="amber accent-1" *ngIf="title.errors.required">
+              Please include a title before saving.
+           </p>
+        </div>
       </div>
     </div>
+
     <div class="row">
       <div class="input-field col s12">
+        <input class="" [(ngModel)]="recipe.subTitle" placeholder="Recipe Sub-Title" type="text">
+        <label>Recipe Sub-Title <e>(optional)</e></label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input [(ngModel)]="recipe.creator" placeholder="Creator Name/Attribution" type="text">
         <label>Original Creator</label>
-        <input [(ngModel)]="recipe.creator" placeholder="Enter Creator Name" type="text">
       </div>
     </div>
     <div class="row">
       <div class="input-field col s12">
+        <input [(ngModel)]="recipe.description" placeholder="Brief and Catchy Description" type="text">
         <label>Description</label>
-        <input [(ngModel)]="recipe.description" placeholder="Enter a description" type="text">
       </div>
     </div>
     <div class="row">
       <div class="input-field col s12">
         <rating-comp-tbc></rating-comp-tbc>
         <div *ngIf="1==2">
+          <rating [interactive]="true" [rate]="recipe.rating" (changeRate)="onChangeRate($event)"></rating>
+          <input [(ngModel)]="recipe.rating" placeholder="Rating" type="text">
           <label>Rating</label>
-          <rating [interactive]="true" [rate]="recipe.rating" (updateRate)="onUpdate($event)"></rating>
-          <input [(ngModel)]="recipe.rating" placeholder="Enter a rating" type="text">
         </div>
       </div>
     </div>
@@ -64,7 +79,7 @@
         </div>
         <div class="row">
           <div class="col s12 center-align">
-            <button class="btn btn-sm" (click)="newIngredient()">
+            <button class="btn btn-sm" type="button" (click)="newIngredient()">
               <i class="material-icons">add</i>
             </button>
           </div>
@@ -74,9 +89,13 @@
     <div class="row">
       <fieldset class="col s12">
         <legend>Method Steps</legend>
-        <div class="row" *ngFor="let method of recipe.method">
+        <div class="row" *ngFor="let method of recipe.method; let idx = index;">
           <div class="input-field col s12 m10">
-            <textarea [(ngModel)]="method.step" placeholder="Enter a step"></textarea>
+            <textarea [attr.id]="getTAID(recipe.id, idx)"
+              class="materialize-textarea"
+              [(ngModel)]="method.step"
+               placeholder="Step Content"></textarea>
+            <label [attr.for]="getTAID(recipe.id, idx)">{{getTALabel(idx)}}</label>
           </div>
           <div class="input-field col s12 m2">
             <button class="btn-flat btn-sm">
@@ -86,7 +105,7 @@
         </div>
         <div class="row">
           <div class="col s12 center-align">
-            <button class="btn btn-sm" (click)="newMethod()">
+            <button class="btn btn-sm" type="button" (click)="newMethod()">
               <i class="material-icons">add</i>
             </button>
           </div>
@@ -99,10 +118,10 @@
         <div class="row">
           <div *ngFor="let tag of recipe.tags">
             <div class="input-field col s12 m10">
-              <input [(ngModel)]="tag.name" placeholder="Enter a tag" type="text">
+              <input [(ngModel)]="tag.name" placeholder="Hash-Tag" type="text">
             </div>
             <div class="input-field col s12 m2">
-              <button class="btn-flat btn-sm" (click)="deleteTag(tag)">
+              <button class="btn-flat btn-sm" type="button" (click)="deleteTag(tag)">
                 <i class="material-icons" (click)="deleteIngredient(ingredient)">delete</i>
               </button>
             </div>
@@ -110,20 +129,22 @@
         </div>
         <div class="row">
           <div class="col s12 center-align">
-            <button class="btn btn-sm" (click)="newTag()">
+            <button class="btn btn-sm" type="button" (click)="newTag()">
               <i class="material-icons">add</i>
             </button>
           </div>
         </div>
       </fieldset>
     </div>
+    <div class="row">
+      <div class="col s12">
+        <button class="btn-flat left" type="submit" (click)="cancelUA.emit(recipe)">
+          Cancel
+        </button>
+        <button class="btn right" type="submit" [disabled]="! form.valid">
+          Save
+        </button>
+      </div>
+    </div>
   </form>
-  <div>
-    <button class="btn-flat left" type="submit" (click)="cancelled.emit(recipe)">
-      Cancel
-    </button>
-    <button class="btn right" type="submit" (click)="saved.emit(recipe)">
-      Save
-    </button>
-  </div>
 </div>

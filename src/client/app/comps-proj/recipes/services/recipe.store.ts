@@ -15,6 +15,7 @@ export interface RecipeI {
   method: Array<Object>;
   published: boolean;
   rating: number;
+  subTitle: string;
   tags: Array<Object>;
   title: string;
 };
