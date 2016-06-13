@@ -11,9 +11,7 @@ export class AppConfigService {
     { code: 'bg', title: 'Bulgarian' }
   ];
 
-  public static APPLICATION_OPTIONS:Object = {
+  public static APPLICATION_OPTIONS = {
 	  recipeDetailsFormInitsOnSubmit: false
-  }
-
-
+  };
 }

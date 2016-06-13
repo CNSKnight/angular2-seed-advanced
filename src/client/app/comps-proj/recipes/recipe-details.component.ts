@@ -84,12 +84,14 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
   }
 
   // get textarea ID
-  getTAID(id, idx) {
-    return (id | 'newID')+'-rTA-'+(idx+1);
+  getTAID(id:number, idx:number) {
+    let label = (id !== undefined ? id : 'newID');
+    let count = (idx+1);
+    return label.toString().concat('-rTA-', count.toString());
   }
 
-  getTALabel(idx) {
-    return 'Step #'+(idx+1).toString().padStart(2, 0);
+  getTALabel(idx:number) {
+    return 'Step #'.concat((idx+1).toString().padStart(2, 0));
   }
 
   // Whenever the user needs to add a new `tag`, push an
@@ -150,7 +152,7 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
     this.recipe.rating = value;
    }
 
-  deleteTag(tag: string) {
+  deleteTag(tag:{name: string}) {
     // loop through all of the `tags` in the `selectedRecipe`
     for (let i = 0; i < this.recipe.tags.length; i++) {
       // if the `tag` at the current index matches that of the one
@@ -193,7 +195,7 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
     // validate submitted tags
     if (recipe.tags && recipe.tags.length) {
       let fTags = recipe.tags.filter((item, idx, ary) => {
-      return !! item.name.trim().length;
+        return !! item.name.trim().length;
       });
 
       recipe.tags = fTags;

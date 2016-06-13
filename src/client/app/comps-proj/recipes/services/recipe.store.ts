@@ -16,6 +16,6 @@ export interface RecipeI {
   published: boolean;
   rating: number;
   subTitle: string;
-  tags: Array<Object>;
+  tags: {name: string}[];
   title: string;
 };

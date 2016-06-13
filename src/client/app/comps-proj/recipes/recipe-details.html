@@ -71,7 +71,7 @@
               <input [(ngModel)]="ingredient.name" placeholder="Name?" type="text">
             </div>
             <div class="input-field col s12 m2">
-              <button class="btn-flat btn-sm">
+              <button class="btn-flat btn-sm" type="button">
                 <i class="material-icons" (click)="deleteIngredient(ingredient)">delete</i>
               </button>
             </div>
@@ -98,8 +98,8 @@
             <label [attr.for]="getTAID(recipe.id, idx)">{{getTALabel(idx)}}</label>
           </div>
           <div class="input-field col s12 m2">
-            <button class="btn-flat btn-sm">
-              <i class="material-icons" (click)="deleteIngredient(ingredient)">delete</i>
+            <button class="btn-flat btn-sm" type="button">
+              <i class="material-icons" (click)="deleteMethod(method)">delete</i>
             </button>
           </div>
         </div>

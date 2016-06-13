@@ -2,12 +2,12 @@
 // selectUA-recipe.reducer.js
 // (c) 2016 David Newman
 // blackshuriken@hotmail.com
-// selectUA-recipe.reducer.js may be freely distributed under the MIT license
+// selected-recipe.reducer.js may be freely distributed under the MIT license
 // ```
 import { AppConfigService } from '../../../frameworks/app.framework/services/app-config.service';
 // # Redux interface/reducer for `recipes`
 
-// The `selectUA recipe` reducer handles the currently
+// The `selected recipe` reducer handles the currently
 // selectUA recipe
 export const selectedRecipeReducer = (state: any = null, {type, payload}) => {
 
@@ -26,4 +26,4 @@ export const selectedRecipeReducer = (state: any = null, {type, payload}) => {
     default:
       return state;
   }
-};
+}
