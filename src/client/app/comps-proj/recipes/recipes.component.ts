@@ -46,6 +46,8 @@ export class RecipesComponent implements OnInit, OnChanges {
 
   showCards: boolean = false;
 
+  _id: number = null;
+
   constructor(private recipesService: RecipeService, // so that we can loadRecipes below
               private store: Store<AppStoreI>) {
     // this.showCards = false;
@@ -67,7 +69,8 @@ export class RecipesComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.recipesService.loadRecipes();
+    if (! this.recipesService.loadRecipe()) {
+      this.loadRecipes();
   }
 
   ngOnChanges(changed:any) {
