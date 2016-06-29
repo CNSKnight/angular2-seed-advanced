@@ -29,5 +29,7 @@ export class ProjectConfig extends SeedAdvancedConfig {
     this.SYSTEM_CONFIG.map['jquery'] = `${this.APP_BASE}node_modules/jquery`;
     this.SYSTEM_CONFIG.map['$'] = 'jquery';
     this.SYSTEM_CONFIG.map['window.jQuery'] = 'jquery';
+    // this may break acacF
+    this.SYSTEM_CONFIG.map['acapFPkg'] = `${this.APP_BASE}core/templates/js/acapF-package.source.js`;
   }
 }

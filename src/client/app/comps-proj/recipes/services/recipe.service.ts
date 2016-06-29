@@ -16,6 +16,9 @@ import { RecipeI } from './recipe.store';
 // import { AppStore } from '../../app/services/app.store';
 import { AppStoreI } from '../../../frameworks/app.framework/index';
 
+// idk what I'm doing here yet, but this should work :|
+import { acap } from 'acapFPkg';
+
 const HEADER = {
   headers: new Headers({
     'Content-Type': 'application/json'
@@ -40,6 +43,12 @@ export class RecipeService {
     this.apiBase = '//localhost:3000/api/recipe';
   }
 
+  // used outside of listing context to load a single
+  loadRecipe(_id:number) {
+    // acap.ADMIN_TAPPADS.contUnitsMgr.getId()
+  }
+
+  // used w/in listing context to load all
   loadRecipes() {
     this.http.get(this.apiBase)
       // map the `HTTP` response from `raw` to `JSON` format
