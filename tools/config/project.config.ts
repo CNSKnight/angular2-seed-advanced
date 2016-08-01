@@ -1,6 +1,5 @@
 import { join } from 'path';
 import { SeedAdvancedConfig } from './seed-advanced.config';
-import { InjectableDependency } from './seed.config.interfaces';
 
 /**
  * This class extends the basic seed configuration, allowing for project specific overrides. A few examples can be found
@@ -12,24 +11,26 @@ export class ProjectConfig extends SeedAdvancedConfig {
 
   constructor() {
     super();
-    this.APP_TITLE = 'Steeve\'s App (in project.config)';
-    let additional_deps: InjectableDependency[] = [
-      {src: 'jquery/dist/jquery.min.js', inject: 'libs'}
+    // this.APP_TITLE = 'Put name of your app here';
+
+    /* Enable typeless compiler runs (faster) between typed compiler runs. */
+    // this.TYPED_COMPILE_INTERVAL = 5;
+
+    // Add `NPM` third-party libraries to be injected/bundled.
+    this.NPM_DEPENDENCIES = [
+      ...this.NPM_DEPENDENCIES,
+      // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
     ];
 
-    const seedDependencies = this.NPM_DEPENDENCIES;
-    this.NPM_DEPENDENCIES = seedDependencies.concat(additional_deps);
+    // Add `local` third-party libraries to be injected/bundled.
+    this.APP_ASSETS = [
+      ...this.APP_ASSETS,
+      // {src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
+      // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
+    ];
 
     /* Add to or override NPM module configurations: */
-    //this.mergeObject( this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false } );
-
-    this.SYSTEM_CONFIG.map = this.SYSTEM_CONFIG.map || {};
-    this.SYSTEM_CONFIG.map['materialize'] = `${this.APP_BASE}node_modules/materialize-css`;
-    this.SYSTEM_CONFIG.map['angular2-materialize'] = `${this.APP_BASE}node_modules/angular2-materialize`;
-    this.SYSTEM_CONFIG.map['jquery'] = `${this.APP_BASE}node_modules/jquery`;
-    this.SYSTEM_CONFIG.map['$'] = 'jquery';
-    this.SYSTEM_CONFIG.map['window.jQuery'] = 'jquery';
-    // this may break acacF
-    this.SYSTEM_CONFIG.map['acapFPkg'] = `${this.APP_BASE}core/templates/js/acapF-package.source.js`;
+    // this.mergeObject(this.PLUGIN_CONFIGS['browser-sync'], { ghostMode: false });
   }
+
 }

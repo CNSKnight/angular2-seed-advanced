@@ -2,8 +2,7 @@ import * as gulp from 'gulp';
 import * as gulpLoadPlugins from 'gulp-load-plugins';
 import { join } from 'path';
 import * as slash from 'slash';
-import { APP_BASE, APP_DEST, APP_SRC, DEPENDENCIES, TARGET_DESKTOP } from '../../config';
-
+import { APP_BASE, APP_DEST, APP_SRC, DEPENDENCIES, CSS_DEST, ASSETS_SRC, TARGET_DESKTOP } from '../../config';
 import { templateLocals } from '../../utils';
 
 const plugins = <any>gulpLoadPlugins();
@@ -48,22 +47,24 @@ function getInjectablesDependenciesRef(name?: string) {
  */
 function mapPath(dep: any) {
   let envPath = dep.src;
-  if (envPath.startsWith(APP_SRC)) {
-    envPath = join(APP_DEST, dep.src.replace(APP_SRC, ''));
+  if (envPath.startsWith(APP_SRC) && !envPath.endsWith('.scss')) {
+    envPath = join(APP_DEST, envPath.replace(APP_SRC, ''));
+  } else if (envPath.startsWith(APP_SRC) && envPath.endsWith('.scss')) {
+    envPath = envPath.replace(ASSETS_SRC, CSS_DEST).replace('.scss', '.css');
   }
   return envPath;
 }
 
 /**
- * Transform the path of a dependecy to its location within the `dist` directory according to the applications
+ * Transform the path of a dependency to its location within the `dist` directory according to the applications
  * environment.
  */
 function transformPath() {
   return function (filepath: string) {
     if (TARGET_DESKTOP) {
       let path = join(APP_BASE, filepath);
-      if (path.indexOf('dist/dev') > -1) {
-        path = path.replace(/dist\/dev\//g, '');
+      if (path.indexOf('dist/dev') > -1 || path.indexOf('dist\\dev') > -1) {
+        path = path.replace(/(dist\/dev\/)|(dist\\dev\\)/g, '');
       }
       arguments[0] = path.substring(1) + `?${Date.now()}`;
     } else {

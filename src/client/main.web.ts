@@ -1,42 +1,48 @@
 // angular
 import {provide, enableProdMode} from '@angular/core';
+import {disableDeprecatedForms, provideForms} from '@angular/forms';
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {APP_BASE_HREF, LocationStrategy, HashLocationStrategy} from '@angular/common';
-import {ELEMENT_PROBE_PROVIDERS} from '@angular/platform-browser';
 
 // config
-import {CoreConfigService} from './app/frameworks/core.framework/index';
-CoreConfigService.PLATFORM_TARGET = CoreConfigService.PLATFORMS.WEB;
-CoreConfigService.DEBUG.LEVEL_4 = true;
+import {Config} from './app/frameworks/core/index';
+Config.PLATFORM_TARGET = Config.PLATFORMS.WEB;
+Config.DEBUG.LEVEL_4 = true;
 
 // app
-import {WindowService, ConsoleService, CORE_PROVIDERS} from './app/frameworks/core.framework/index';
-import {ANALYTICS_PROVIDERS} from './app/frameworks/analytics.framework/index';
-import {MultilingualService} from './app/frameworks/i18n.framework/index';
-import {APP_PROVIDERS, AppConfigService} from './app/frameworks/app.framework/index';
-import {AppComponent} from './app/comps-proj/app/app.component';
+import {WindowService, ConsoleService, CORE_PROVIDERS} from './app/frameworks/core/index';
+import {ANALYTICS_PROVIDERS} from './app/frameworks/analytics/index';
+import {MultilingualService} from './app/frameworks/i18n/index';
+import {APP_PROVIDERS, AppConfigService} from './app/frameworks/app/index';
+import {APP_ROUTER_PROVIDERS} from './app/components/app/app.routes';
+import {AppComponent} from './app/components/app/app.component';
+
 // custom i18n language support
 MultilingualService.SUPPORTED_LANGUAGES = AppConfigService.SUPPORTED_LANGUAGES;
 
+// depending on environments, you could push in different providers as needed
 const ENV_PROVIDERS: Array<any> = [];
+
+// example of how to use build variables to determine environment
 if ('<%= ENV %>' === 'prod' || '<%= TARGET_DESKTOP_BUILD %>' === 'true') {
   enableProdMode();
-} else {
-  ENV_PROVIDERS.push(ELEMENT_PROBE_PROVIDERS);
 } 
 
 let BOOTSTRAP_PROVIDERS: any[] = [
+  disableDeprecatedForms(),
+  provideForms(),
   ENV_PROVIDERS,
   provide(APP_BASE_HREF, { useValue: '<%= APP_BASE %>' }),
   provide(WindowService, { useValue: window }),
   provide(ConsoleService, { useValue: console }),
   CORE_PROVIDERS,
   ANALYTICS_PROVIDERS,
-  APP_PROVIDERS
+  APP_PROVIDERS,
+  APP_ROUTER_PROVIDERS
 ];
 
 if ('<%= TARGET_DESKTOP %>' === 'true') {
-  CoreConfigService.PLATFORM_TARGET = CoreConfigService.PLATFORMS.DESKTOP;
+  Config.PLATFORM_TARGET = Config.PLATFORMS.DESKTOP;
   // desktop (electron) must use hash
   BOOTSTRAP_PROVIDERS.push(provide(LocationStrategy, {useClass: HashLocationStrategy}));
 }  
