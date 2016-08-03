@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <base href="<%= APP_BASE %>">
   <meta charset="utf-8">
@@ -9,30 +10,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- these are not `local` so they'll not be "injected" -->
-  <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-  <!-- inject:css -->
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.css">
 
+  <!-- inject:css -->
   <!-- endinject -->
-  
+
   <% if (TARGET_DESKTOP) { %>
-  <!-- shims:js -->
-  <!-- endinject -->
-  <% } %>
-  
-  <% if (ENV === 'prod') { %>
-  <!-- segment.io -->
-  <script type="text/javascript">
+    <!-- shims:js -->
+    <!-- endinject -->
+    <% } %>
+
+      <% if (ENV === 'prod') { %>
+        <!-- segment.io -->
+        <script type="text/javascript">
   !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
   
   // REPLACE with your Segment.io write_key
-  analytics.load("XVDaTIQYy5g0akx5iTJmPozLKWFLkX6y");
+  analytics.load("5iTJmPozLKWFLkX6yXVDaTIQYy5g0akx");
   analytics.page()
   }}();
   </script>
-  <% } %>
-  
+        <% } %>
+
 </head>
+
 <body>
 
   <sd-app>Loading...</sd-app>
@@ -43,37 +45,42 @@
   </script>
 
   <% if (!TARGET_DESKTOP) { %>
-  <!-- shims:js -->
-  <!-- endinject -->
-  <% } %>
+    <!-- shims:js -->
+    <!-- endinject -->
+    <% } %>
 
-  <% if (ENV === 'dev') { %>
-  <script>
+      <% if (ENV === 'dev') { %>
+        <script>
     System.config(<%=
       JSON.stringify(SYSTEM_CONFIG, null, 2)
     %>)
+    window.require = System.amdRequire;
+    window.define = System.amdDefine;
   </script>
-  <% } %>
+        <% } %>
 
-  <!-- libs:js -->
-  <!-- endinject -->
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
 
-  <!-- inject:js -->
-  <!-- endinject -->
+          <!-- libs:js -->
+          <!-- endinject -->
 
-  <% if (ENV === 'dev') { %>
-  <script>
+          <!-- inject:js -->
+          <!-- endinject -->
+
+          <% if (ENV === 'dev') { %>
+            <script>
   System.import('<%= BOOTSTRAP_MODULE %>')
     .catch(function (e) {
       console.error(e,
         'Report this error at https://github.com/NathanWalker/angular2-seed-advanced/issues');
     });
   </script>
-  <% } %>
+            <% } %>
 
-  <% if (TARGET_DESKTOP && ENV !== 'prod') { %>
-  <script>require('electron-connect').client.create()</script> 
-  <% } %>
+              <% if (TARGET_DESKTOP && ENV !== 'prod') { %>
+                <script>require('electron-connect').client.create()</script>
+                <% } %>
 
 </body>
+
 </html>

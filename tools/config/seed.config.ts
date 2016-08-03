@@ -153,7 +153,7 @@ export class SeedConfig {
    * `index.html`.
    * @type {string}
    */
-  APP_TITLE = 'Steeve\'s App (in seed.config)';
+  APP_TITLE = 'ng2-sam';
 
   /**
    * The base folder of the applications source files.
@@ -287,8 +287,8 @@ export class SeedConfig {
     { src: 'zone.js/dist/zone.js', inject: 'libs' },
     { src: 'core-js/client/shim.min.js', inject: 'shims' },
     { src: 'systemjs/dist/system.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
-    { src: 'rxjs/bundles/Rx.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
-    { src: 'jquery/dist/jquery.min.js', inject: 'libs' }
+    { src: 'rxjs/bundles/Rx.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT }
+    // nope - not w/materialize cdn lib { src: 'jquery/dist/jquery.min.js', inject: 'libs' }
   ];
 
   /**
@@ -296,7 +296,7 @@ export class SeedConfig {
    * @type {InjectableDependency[]}
    */
   APP_ASSETS: InjectableDependency[] = [
-    { src: `${this.CSS_SRC}/main.${ this.getInjectableStyleExtension() }`, inject: true, vendor: false },
+    { src: `${this.CSS_SRC}/main.${this.getInjectableStyleExtension()}`, inject: true, vendor: false },
   ];
 
   /**
@@ -343,16 +343,11 @@ export class SeedConfig {
       '*': `node_modules/*`
     },
     packages: {
-      rxjs: { defaultExtension: 'js' }
-    },
-    maps: {
-      'materialize': `node_modules/materialize-css,
-      'angular2-materialize': `node_modules/angular2-materialize`,
-      'jquery': `node_modules/jquery`,
-      '$': 'jquery',
-      'window.jQuery': 'jquery',
-      'acapFPkg': `${this.APP_BASE}core/templates/js/acapF-package.source.js`
-    };
+      rxjs: {
+        defaultExtension: 'js'
+      }
+    }
+  };
 
   /**
    * The configuration of SystemJS of the application.
@@ -488,7 +483,7 @@ export class SeedConfig {
         rebaseUrls: false
       }
     }
-  };
+  }
 
   /**
    * Recursively merge source onto target.
@@ -505,7 +500,7 @@ export class SeedConfig {
    * @param {any} pluginKey The object key to look up in PLUGIN_CONFIGS.
    */
   getPluginConfig(pluginKey: string): any {
-    if (this.PLUGIN_CONFIGS[ pluginKey ]) {
+    if (this.PLUGIN_CONFIGS[pluginKey]) {
       return this.PLUGIN_CONFIGS[pluginKey];
     }
     return null;

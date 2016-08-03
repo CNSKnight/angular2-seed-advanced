@@ -2,7 +2,7 @@ import {TestComponentBuilder} from '@angular/compiler/testing';
 import {Component} from '@angular/core';
 import {getDOM} from '@angular/platform-browser/src/dom/dom_adapter';
 
-import {t, TEST_COMPONENT_PROVIDERS} from '../../frameworks/test.framework/index';
+import {t, TEST_COMPONENT_PROVIDERS} from '../../frameworks/test/index';
 import {AppComponent} from './app.component';
 
 export function main() {

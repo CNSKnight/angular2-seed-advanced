@@ -4,7 +4,7 @@
 // blackshuriken@hotmail.com
 // selected-recipe.reducer.js may be freely distributed under the MIT license
 // ```
-import { AppConfigService } from '../../../frameworks/app.framework/services/app-config.service';
+import { AppConfigService } from '../../../frameworks/app/services/app-config.service';
 // # Redux interface/reducer for `recipes`
 
 // The `selected recipe` reducer handles the currently

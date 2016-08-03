@@ -20,7 +20,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 // import { AppStore } from '../app/services/app.store';
-import { AppStoreI } from '../../frameworks/app.framework/index';
+import { AppStoreI } from '../../frameworks/app/index';
 
 import { RecipeI } from './services/recipe.store';
 import { RecipeService } from './services/recipe.service';
@@ -51,6 +51,8 @@ export class RecipesComponent implements OnInit, OnChanges {
   constructor(private recipesService: RecipeService, // so that we can loadRecipes below
               private store: Store<AppStoreI>) {
     // this.showCards = false;
+
+    this.recipesService = recipesService;
   
     // Bind to the subscribed `recipesR` ~observable~ behavior subject from the store
     this.recipesR = recipesService.recipesR;
@@ -70,7 +72,8 @@ export class RecipesComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if (! this.recipesService.loadRecipe()) {
-      this.loadRecipes();
+      this.recipesService.loadRecipes();
+    }
   }
 
   ngOnChanges(changed:any) {

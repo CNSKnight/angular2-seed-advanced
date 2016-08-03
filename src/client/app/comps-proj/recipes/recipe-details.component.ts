@@ -34,6 +34,8 @@ import { Rating } from './rating.component';
 
 import { MaterializeDirective } from "angular2-materialize";
 
+import {padStart} from "lodash";
+
 @Component({
   moduleId: module.id,
   selector: 'recipe-detail',
@@ -91,11 +93,11 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
   }
 
   getTALabel(idx:number) {
-    return 'Step #'.concat((idx+1).toString().padStart(2, 0));
+    return 'Step #'.concat(_.padStart((idx+1).toString(), 2, '0'));
   }
 
   // Whenever the user needs to add a new `tag`, push an
-  // empty `tag` object to the `tags` array on the
+  // empty `tag` object onto the `tags` array on the
   // `selectedRecipe`
   newTag() {
     // blank `tag` object

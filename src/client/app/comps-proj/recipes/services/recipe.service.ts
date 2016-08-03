@@ -14,10 +14,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { RecipeI } from './recipe.store';
 // import { AppStore } from '../../app/services/app.store';
-import { AppStoreI } from '../../../frameworks/app.framework/index';
+import { AppStoreI } from '../../../frameworks/app/index';
 
 // idk what I'm doing here yet, but this should work :|
-import { acap } from 'acapFPkg';
+// import 'acapFPkg';
 
 const HEADER = {
   headers: new Headers({
@@ -44,8 +44,9 @@ export class RecipeService {
   }
 
   // used outside of listing context to load a single
-  loadRecipe(_id:number) {
+  loadRecipe(_id?:number) {
     // acap.ADMIN_TAPPADS.contUnitsMgr.getId()
+    return true; // temp
   }
 
   // used w/in listing context to load all
