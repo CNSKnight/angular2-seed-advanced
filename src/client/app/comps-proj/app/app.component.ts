@@ -1,6 +1,5 @@
 // angular
 import {ChangeDetectionStrategy} from '@angular/core';
-import {RouteConfig} from '@angular/router-deprecated';
 
 // app
 //import {RecipeService} from '../recipes/services/recipes/index';
@@ -10,7 +9,6 @@ import {RouteComponent, PlatformDirective} from '../../frameworks/core/index';
 import {LangSwitcherComponent} from '../../frameworks/i18n/index';
 import {NavbarComponent} from '../shared/navbar.component';
 import {ToolbarComponent} from '../shared/toolbar.component';
-import {RecipesComponent} from '../recipes/recipes.component';
 import {RecipeService} from '../recipes/services/recipe.service';
 
 @RouteComponent({

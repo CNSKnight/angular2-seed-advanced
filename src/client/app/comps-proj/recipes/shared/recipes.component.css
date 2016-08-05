@@ -20,3 +20,15 @@
 .secondary-content.left {
   margin-right:.5em;
 }
+.action-bar i.medium {
+    font-size: 1.2em;
+}
+.recipes.collection .collection-item,
+.recipes.collection .card {
+      border-left: 5px transparent;
+      padding-left: 25px;
+}
+.recipes.collection .collection-item.active,
+.recipes.collection .card.active {
+  border-left-color: solid rgb(238, 110, 115);
+}

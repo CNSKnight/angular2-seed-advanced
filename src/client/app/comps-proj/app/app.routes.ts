@@ -5,8 +5,8 @@ import {HomeRoutes} from '../home/home.routes';
 import {RecipesRoutes} from '../recipes/recipes.routes';
 
 export const routes: RouterConfig = [
-  ...HomeRoutes,
-  ...AboutRoutes,
+  //...HomeRoutes,
+  //...AboutRoutes,
   ...RecipesRoutes
 ];
 

@@ -33,14 +33,14 @@ import { RecipeDetailsComponent } from './recipe-details.component';
   selector: 'recipes',
   providers: [],
   templateUrl: 'recipes.html',
-  directives: [RecipeListComponent, RecipeCardsComponent, RecipeDetailsComponent],
+  directives: [RecipeDetailsComponent, RecipeListComponent, RecipeCardsComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['shared/recipes.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 // snippets: https://marketplace.visualstudio.com/items?itemName=johnpapa.@angular
 export class RecipesComponent implements OnInit, OnChanges {
-  recipesR: Observable<Array<RecipeI>>;
+  recipesR: Observable<RecipeI[]>;
 
   selectedRecipeR: Observable<RecipeI>;
 
@@ -66,10 +66,10 @@ export class RecipesComponent implements OnInit, OnChanges {
     console.log(this.selectedRecipeR);
     this.selectedRecipeR.subscribe(v => console.log('selectedRecipeR: ', v));
 
-    // `recipeService.loadRecipes` dispatches the `ADD_RECIPES` event
-    // to our store which in turn updates the `recipesS` collection
   }
 
+  // `recipeService.loadRecipes` dispatches the `ADD_RECIPES` event
+  // to our store which in turn updates the `recipesS` collection
   ngOnInit() {
     if (! this.recipesService.loadRecipe()) {
       this.recipesService.loadRecipes();

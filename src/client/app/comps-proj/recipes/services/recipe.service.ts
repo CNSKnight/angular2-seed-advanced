@@ -29,7 +29,7 @@ const HEADER = {
 // enables potential pre-reducer processing
 @Injectable()
 export class RecipeService {
-  recipesR: Observable<Array<RecipeI>>;
+  recipesR: Observable<RecipeI[]>;
   apiBase: string;
 
   // Inject the `AppStore` into the constructor with a type of `AppStore`
@@ -46,7 +46,7 @@ export class RecipeService {
   // used outside of listing context to load a single
   loadRecipe(_id?:number) {
     // acap.ADMIN_TAPPADS.contUnitsMgr.getId()
-    return true; // temp
+    return false; // temp
   }
 
   // used w/in listing context to load all

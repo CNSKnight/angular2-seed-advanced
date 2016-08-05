@@ -7,6 +7,8 @@
 
 // # Recipes Component
 
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
 import {
   Component,
   Input,
@@ -15,16 +17,18 @@ import {
   ChangeDetectionStrategy,
   OnInit,
   OnChanges
- } from '@angular/core';
+} from '@angular/core';
 import {
   FormBuilder,
   Validators,
   Control,
   ControlGroup,
-  FORM_DIRECTIVES
 } from '@angular/common';
-import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
+import {
+  FORM_DIRECTIVES,
+  FormControl,
+  FormGroup
+} from '@angular/forms';
 
 import { RecipeService } from './services/recipe.service';
 import { RecipeI } from './services/recipe.store';
@@ -41,31 +45,24 @@ import {padStart} from "lodash";
   selector: 'recipe-detail',
   templateUrl: 'recipe-details.html',
   // directives: [Rating]
-  directives: [MaterializeDirective, Rating]
- })
+  directives: [FORM_DIRECTIVES, MaterializeDirective, Rating]
+})
 export class RecipeDetailsComponent implements OnInit, OnChanges {
-
+  selectedRecipeR: RecipeI;
   originalTitle: string;
-  selectedRecipeR:RecipeI; // binder matches inherited property
-  recipe:RecipeI;
-  test:RecipeI;
-
-  form: ControlGroup;
-  title: Control;
+  recipe: RecipeI;
+  test: RecipeI;
 
   // Assign our `recipe` to a locally scoped property
   // Perform additional logic on every update via ES6 setter
   // Create a copy of `_recipe` and assign it to `this.selectedRecipe`
   // to which we will use to bind our form
-  @Input('test') selectedRecipeR:RecipeI;
+  // @Input('test') selectedRecipeR: RecipeI;
   @Input('selectedRecipeR')
-  set _selectedRecipeR(val:RecipeI) {
-    val && (this.originalTitle = val.title);
-    this.recipe = Object.assign({}, val || {});
-
-    // DEBUG
-    console.log('RecipeDetailsComponent.recipe: ', this.selectedRecipeR);
-   }
+  set _recipe(recipe: RecipeI) {
+    recipe && (this.originalTitle = recipe.title);
+    this.recipe = Object.assign({}, recipe || {});
+  }
 
   // Allow the user to save/delete a `recipe or cancel the
   // operation. Flow events up from here.
@@ -73,27 +70,40 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
   @Output() cancelUA = new EventEmitter();
 
   constructor(private builder: FormBuilder) {
-    this.title = new Control('', Validators.required);
-    this.form = builder.group({
-      title:  this.title
-    });
+    // this.title = new Control('', Validators.required);
+    // this.rdform = builder.group({
+    //   title: this.title
+    // });
   }
 
   ngOnInit() {
+    // this.rdForm = this.builder.group({
+    //   title: [],
+    //   ingredient: this.builder.group({
+    //     qty: [],
+    //     unit: [],
+    //     name: []
+    //   })
+    // });
+
   }
 
-  ngOnChanges(changed:any) {
+  ngOnChanges(changed: any) {
   }
 
+  ngAfterViewChecked() {
+    Materialize.updateTextFields();
+  }
+  
   // get textarea ID
-  getTAID(id:number, idx:number) {
+  getTAID(id: number, idx: number) {
     let label = (id !== undefined ? id : 'newID');
-    let count = (idx+1);
+    let count = (idx + 1);
     return label.toString().concat('-rTA-', count.toString());
   }
 
-  getTALabel(idx:number) {
-    return 'Step #'.concat(_.padStart((idx+1).toString(), 2, '0'));
+  getTALabel(idx: number) {
+    return 'Step #'.concat(_.padStart((idx + 1).toString(), 2, '0'));
   }
 
   // Whenever the user needs to add a new `tag`, push an
@@ -103,14 +113,14 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
     // blank `tag` object
     let tag = {
       name: ''
-     };
+    };
 
     // Check to see if the `tags` array exists before
     // attempting to push a `tag` to it
     this.recipe.tags || (this.recipe.tags = []);
 
     this.recipe.tags.push(tag);
-   }
+  }
 
   // Whenever the user needs to add a new `ingredient`, push an
   // empty `ingredient` object to the `ingredient` array on the
@@ -121,15 +131,15 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
       qty: '',
       unit: '',
       name: ''
-     };
+    };
 
     // Check to see if the `ingredients` array exists before
     // attempting to push an `ingredient` to it
-    if (!this.recipe.ingredients)
+    if (! this.recipe.ingredients)
       this.recipe.ingredients = [];
 
     this.recipe.ingredients.push(ingredient);
-   }
+  }
 
   // Whenever the user needs to add a new `method`, push an
   // empty `method` object to the `method` array on the
@@ -138,7 +148,7 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
     // blank `method` object
     let method = {
       step: ''
-     };
+    };
 
     // Check to see if the `method` array exists before
     // attempting to push a `method` to it
@@ -146,15 +156,15 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
       this.recipe.method = [];
 
     this.recipe.method.push(method);
-   }
+  }
 
   onChangeRate(value: number) {
     // Set the value of the selectUA recipe's rating to the
     // value passed up from the `rating` component
     this.recipe.rating = value;
-   }
+  }
 
-  deleteTag(tag:{name: string}) {
+  deleteTag(tag: { name: string }) {
     // loop through all of the `tags` in the `selectedRecipe`
     for (let i = 0; i < this.recipe.tags.length; i++) {
       // if the `tag` at the current index matches that of the one
@@ -162,9 +172,9 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
       if (this.recipe.tags[i] === tag) {
         // delete the `tag` at the current index
         this.recipe.tags.splice(i, 1);
-       }
-     }
-   }
+      }
+    }
+  }
 
   deleteIngredient(ingredient: number) {
     // loop through all of the `ingredients` in the `selectedRecipe`
@@ -174,9 +184,9 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
       if (this.recipe.ingredients[i] === ingredient) {
         // delete the `ingredient` at the current index
         this.recipe.ingredients.splice(i, 1);
-       }
-     }
-   }
+      }
+    }
+  }
 
   deleteMethod(step: number) {
     // loop through all of the `method` in the `selectedRecipe`
@@ -186,18 +196,18 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
       if (this.recipe.method[i] === step) {
         // delete the `method` at the current index
         this.recipe.method.splice(i, 1);
-       }
-     }
-   }
+      }
+    }
+  }
 
   /*
   * @todo remove empty or blacklisted tags or blacklisted chars
   */
-  onSubmit(recipe:RecipeI, next) {
+  onSubmit(recipe: RecipeI, next) {
     // validate submitted tags
     if (recipe.tags && recipe.tags.length) {
       let fTags = recipe.tags.filter((item, idx, ary) => {
-        return !! item.name.trim().length;
+        return !!item.name.trim().length;
       });
 
       recipe.tags = fTags;
@@ -206,4 +216,4 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
     next && next.emit && next.emit(recipe);
   }
 
- }
+}
