@@ -1,4 +1,5 @@
 import { join } from 'path';
+import * as slash from 'slash';
 import { argv } from 'yargs';
 
 import { Environments, InjectableDependency } from './seed.config.interfaces';
@@ -66,18 +67,24 @@ export class SeedConfig {
   COVERAGE_PORT = argv['coverage-port'] || 4004;
 
   /**
+  * The path to the coverage output
+  * NB: this must match what is configured in ./karma.conf.js
+  */
+  COVERAGE_DIR = 'coverage';
+
+  /**
    * The path for the base of the application at runtime.
-   * The default path is based on the environment ('/' for development and '' for production),
+   * The default path is based on the environment '/',
    * which can be overriden by the `--base` flag when running `npm start`.
    * @type {string}
    */
-  APP_BASE = argv['base'] || (this.ENV === ENVIRONMENTS.DEVELOPMENT ? '/' : '');
+  APP_BASE = argv['base'] || '/';
 
   /**
    * The base path of node modules.
    * @type {string}
    */
-  NPM_BASE = join(this.APP_BASE, 'node_modules/');
+  NPM_BASE = slash(join(this.APP_BASE, 'node_modules/'));
 
   /**
    * The flag for the hot-loader option of the application.
@@ -130,7 +137,7 @@ export class SeedConfig {
    * The default directory is `app`.
    * @type {string}
    */
-  BOOTSTRAP_DIR = 'app';
+  BOOTSTRAP_DIR = argv['app'] || 'app';
 
   /**
    * The directory where the client files are located.
@@ -148,6 +155,11 @@ export class SeedConfig {
    */
   BOOTSTRAP_MODULE = `${this.BOOTSTRAP_DIR}/` + (this.ENABLE_HOT_LOADING ? 'hot_loader_main' : 'main');
 
+  BOOTSTRAP_PROD_MODULE = `${this.BOOTSTRAP_DIR}/` + 'main';
+
+  NG_FACTORY_FILE = 'main-prod';
+
+  BOOTSTRAP_FACTORY_PROD_MODULE = `${this.BOOTSTRAP_DIR}/${this.NG_FACTORY_FILE}`;
   /**
    * The default title of the application as used in the `<title>` tag of the
    * `index.html`.
@@ -287,8 +299,7 @@ export class SeedConfig {
     { src: 'zone.js/dist/zone.js', inject: 'libs' },
     { src: 'core-js/client/shim.min.js', inject: 'shims' },
     { src: 'systemjs/dist/system.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
-    { src: 'rxjs/bundles/Rx.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT }
-    // nope - not w/materialize cdn lib { src: 'jquery/dist/jquery.min.js', inject: 'libs' }
+    { src: 'rxjs/bundles/Rx.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
   ];
 
   /**
@@ -321,7 +332,7 @@ export class SeedConfig {
    * The configuration of SystemJS for the `dev` environment.
    * @type {any}
    */
-  protected SYSTEM_CONFIG_DEV: any = {
+  SYSTEM_CONFIG_DEV: any = {
     defaultJSExtensions: true,
     packageConfigPaths: [
       `/node_modules/*/package.json`,
@@ -330,17 +341,30 @@ export class SeedConfig {
     ],
     paths: {
       [this.BOOTSTRAP_MODULE]: `${this.APP_BASE}${this.BOOTSTRAP_MODULE}`,
-      '@angular/common': `node_modules/@angular/common/bundles/common.umd.js`,
-      '@angular/compiler': `node_modules/@angular/compiler/bundles/compiler.umd.js`,
-      '@angular/core': `node_modules/@angular/core/bundles/core.umd.js`,
-      '@angular/forms': `node_modules/@angular/forms/bundles/forms.umd.js`,
-      '@angular/http': `node_modules/@angular/http/bundles/http.umd.js`,
-      '@angular/platform-browser': `node_modules/@angular/platform-browser/bundles/platform-browser.umd.js`,
-      '@angular/platform-browser-dynamic': `node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js`,
-      '@angular/router': `node_modules/@angular/router/index.js`,
-      'rxjs/*': `node_modules/rxjs/*`,
-      'app/*': `/app/*`,
-      '*': `node_modules/*`
+      '@angular/common': 'node_modules/@angular/common/bundles/common.umd.js',
+      '@angular/compiler': 'node_modules/@angular/compiler/bundles/compiler.umd.js',
+      '@angular/core': 'node_modules/@angular/core/bundles/core.umd.js',
+      '@angular/forms': 'node_modules/@angular/forms/bundles/forms.umd.js',
+      '@angular/http': 'node_modules/@angular/http/bundles/http.umd.js',
+      '@angular/platform-browser': 'node_modules/@angular/platform-browser/bundles/platform-browser.umd.js',
+      '@angular/platform-browser-dynamic': 'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+      '@angular/router': 'node_modules/@angular/router/bundles/router.umd.js',
+
+      '@angular/common/testing': 'node_modules/@angular/common/bundles/common-testing.umd.js',
+      '@angular/compiler/testing': 'node_modules/@angular/compiler/bundles/compiler-testing.umd.js',
+      '@angular/core/testing': 'node_modules/@angular/core/bundles/core-testing.umd.js',
+      '@angular/http/testing': 'node_modules/@angular/http/bundles/http-testing.umd.js',
+      '@angular/platform-browser/testing':
+        'node_modules/@angular/platform-browser/bundles/platform-browser-testing.umd.js',
+      '@angular/platform-browser-dynamic/testing':
+        'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
+      '@angular/router/testing': 'node_modules/@angular/router/bundles/router-testing.umd.js',
+
+      'rxjs/*': 'node_modules/rxjs/*',
+      'app/*': '/app/*',
+      // For test config
+      'dist/dev/*': '/base/dist/dev/*',
+      '*': 'node_modules/*'
     },
     packages: {
       rxjs: {
@@ -376,6 +400,10 @@ export class SeedConfig {
         defaultExtension: 'js'
       },
       '@angular/compiler': {
+        main: 'index.js',
+        defaultExtension: 'js'
+      },
+      '@angular/core/testing': {
         main: 'index.js',
         defaultExtension: 'js'
       },
@@ -432,6 +460,25 @@ export class SeedConfig {
   COLOR_GUARD_WHITE_LIST: [string, string][] = [
   ];
 
+  protected DEV_REWRITE_RULES = [
+    {
+      from: /^\/node_modules\/.*$/,
+      to: (context:any) => context.parsedUrl.pathname
+    },
+    {
+      from: /^\/app\/.*$/,
+      to: (context:any) => context.parsedUrl.pathname
+    },
+    {
+      from: /^\/assets\/.*$/,
+      to: (context:any) => context.parsedUrl.pathname
+    },
+    {
+      from: /^\/css\/.*$/,
+      to: (context:any) => context.parsedUrl.pathname
+    }
+  ];
+
   /**
    * Configurations for NPM module configurations. Add to or override in project.config.ts.
    * If you like, use the mergeObject() method to assist with this.
@@ -445,7 +492,32 @@ export class SeedConfig {
      * @type {any}
      */
     'browser-sync': {
-      middleware: [require('connect-history-api-fallback')({ index: `${this.APP_BASE}index.html` })],
+      middleware: [require('connect-history-api-fallback')({
+        index: `${this.APP_BASE}index.html`
+        // rewrites: [
+        //   {
+        //     from: new RegExp(`^${this.NPM_BASE}.*$`),
+        //     to: (context:any) => context.parsedUrl.pathname
+        //   },
+        //   {
+        //     from: new RegExp(`^\/${this.BOOTSTRAP_DIR}\/.*$`),
+        //     to: (context:any) => context.parsedUrl.pathname
+        //   },
+        //   {
+        //     from: new RegExp(`^${this.APP_BASE}${this.APP_SRC}\/.*$`),
+        //     to: (context:any) => context.parsedUrl.pathname
+        //   },
+        //   {
+        //     from: new RegExp(`^${this.ASSETS_SRC.replace(this.APP_SRC, '')}\/.*$`),
+        //     to: (context:any) => context.parsedUrl.pathname
+        //   },
+        //   {
+        //     from: new RegExp(`^${this.CSS_DEST.replace(this.APP_DEST, '')}\/.*$`),
+        //     to: (context:any) => `/${slash(join(this.APP_DEST, context.parsedUrl.pathname))}`
+        //   }
+        // ],
+        // disableDotRule: true
+      })],
       port: this.PORT,
       startPath: this.APP_BASE,
       open: argv['b'] ? false : true,
@@ -453,6 +525,7 @@ export class SeedConfig {
       server: {
         baseDir: `${this.DIST_DIR}/empty/`,
         routes: {
+          [`${this.APP_BASE}${this.APP_SRC}`]: this.APP_SRC,
           [`${this.APP_BASE}${this.APP_DEST}`]: this.APP_DEST,
           [`${this.APP_BASE}node_modules`]: 'node_modules',
           [`${this.APP_BASE.replace(/\/$/, '')}`]: this.APP_DEST
@@ -461,7 +534,7 @@ export class SeedConfig {
     },
 
     // Note: you can customize the location of the file
-    'environment-config': require('../env/config.json'),
+    'environment-config': join(this.PROJECT_ROOT, this.TOOLS_DIR, 'env'),
 
     /**
      * The options to pass to gulp-sass (and then to node-sass).
