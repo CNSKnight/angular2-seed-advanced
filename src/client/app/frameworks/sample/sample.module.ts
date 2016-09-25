@@ -13,6 +13,7 @@ import { NavbarComponent } from './components/navbar.component';
 import { nameListReducer, NameListService } from './services/name-list.service';
 import { MultilingualModule } from '../i18n/multilingual.module';
 import { multilingualReducer, MultilingualStateI } from '../i18n/services/multilingual.service';
+import { RecipesModule } from '../../comps-proj/recipes/recipes.module';
 
 // state
 export interface AppStoreI {
@@ -23,7 +24,6 @@ export interface AppStoreI {
 /**
  * Do not specify providers for modules that might be imported by a lazy loaded module.
  */
-
 @NgModule({
   imports: [
     CommonModule,
@@ -33,7 +33,8 @@ export interface AppStoreI {
     StoreModule.provideStore({
       i18n: multilingualReducer,
       names: nameListReducer
-    })
+    }),
+    RecipesModule
   ],
   declarations: [
     ToolbarComponent,
