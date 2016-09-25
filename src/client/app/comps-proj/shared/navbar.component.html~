@@ -1,5 +1,0 @@
-<nav>
-  <a [routerLink]="['/Home']">{{'HOME' | translate}}</a>
-  <a [routerLink]="['/About']">{{'ABOUT' | translate}}</a>
-  <a [routerLink]="['/Recipes']">{{'RECIPES' | translate}}</a>
-</nav>
