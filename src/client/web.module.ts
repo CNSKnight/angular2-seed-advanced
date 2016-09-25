@@ -5,10 +5,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 // app
-import { AppComponent } from './app/components/app.component';
-import { HomeComponent } from './app/components/home/home.component';
-import { AboutComponent } from './app/components/about/about.component';
-import { routes } from './app/components/app.routes';
+import { AppComponent } from './app/comps-proj/app.component';
+import { HomeComponent } from './app/comps-proj/home/home.component';
+import { AboutComponent } from './app/comps-proj/about/about.component';
+import { routes } from './app/comps-proj/app.routes';
 
 // feature modules
 import { CoreModule } from './app/frameworks/core/core.module';
