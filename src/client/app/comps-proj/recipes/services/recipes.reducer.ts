@@ -5,6 +5,8 @@
 // recipes.reducer.js may be freely distributed under the MIT license
 // ```
 
+import {ActionReducer, Action} from "@ngrx/store";
+
 // ** Import our `recipe` store
 import { RecipeI } from './recipe.store';
 
@@ -20,7 +22,10 @@ import { RecipeI } from './recipe.store';
 // The `recipes` reducer performs actions on our list of `recipes`
 // Notice that we set `state` to a default value to initialize
 // smoothly
-export const recipesReducer = (state: any = [], {type, payload}) => {
+export const recipesReducer : ActionReducer<RecipeI[]> = (state : RecipeI[] = [], action: Action) => {
+
+  let type = action.type;
+  let payload = action.payload;
 
   // DEBUG
   console.log('Recipes reducer processing type: ', type);

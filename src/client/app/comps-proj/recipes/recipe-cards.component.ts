@@ -19,18 +19,13 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
-import { RecipeService } from './services/recipe.service';
 import { RecipeI } from './services/recipe.store';
-// import { AppStore } from '../app/services/app.store';
-
-import { Rating } from './rating.component';
 
 @Component({
   moduleId: module.id,
   selector: 'recipe-cards',
-  templateUrl: 'recipe-card.html',
-  directives: [Rating]
- })
+  templateUrl: 'recipe-card.html'
+})
 
 export class RecipeCardsComponent implements OnChanges { 
   // The RecipesComponent hands off `recipesS` (and `selectedRecipeS`)

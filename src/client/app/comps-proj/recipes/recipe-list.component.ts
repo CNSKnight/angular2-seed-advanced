@@ -18,21 +18,13 @@ import {
   OnInit,
   OnChanges
 } from '@angular/core';
-import {
-  NgClass
-} from '@angular/common';
 
-import { RecipeService } from './services/recipe.service';
 import { RecipeI } from './services/recipe.store';
-// import { AppStore } from '../app/services/app.store';
-
-import { Rating } from './rating.component';
 
 @Component({
   moduleId: module.id,
   selector: 'recipe-list',
-  templateUrl: 'recipe-list.html',
-  directives: [Rating, NgClass]
+  templateUrl: 'recipe-list.html'
 })
 
 export class RecipeListComponent implements OnInit, OnChanges {

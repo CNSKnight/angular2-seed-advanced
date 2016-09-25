@@ -1,4 +1,4 @@
-import { recipes } from './recipes.reducer';
+import { recipesReducer } from './services/recipes.reducer';
 
 import { selectedRecipe } from './selectUA-recipe.reducer';
 

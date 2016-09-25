@@ -14,7 +14,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { RecipeI } from './recipe.store';
 // import { AppStore } from '../../app/services/app.store';
-import { AppStoreI } from '../../../frameworks/app/index';
+import { RecipesStoreI } from '../recipes.module';
 
 // idk what I'm doing here yet, but this should work :|
 // import 'acapFPkg';
@@ -29,12 +29,12 @@ const HEADER = {
 // enables potential pre-reducer processing
 @Injectable()
 export class RecipeService {
-  recipesR: Observable<RecipeI[]>;
+  recipesR: Observable<any>;
   apiBase: string;
 
   // Inject the `AppStore` into the constructor with a type of `AppStore`
   constructor(private http: Http,
-              private store: Store<AppStoreI>) {
+              private store: Store<RecipesStoreI>) {
 
     // Bind an observable of our `recipes` to `RecipeService`
     // Since this is essentially a `key, value` system, we can

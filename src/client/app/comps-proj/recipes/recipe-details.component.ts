@@ -18,34 +18,19 @@ import {
   OnInit,
   OnChanges
 } from '@angular/core';
-import {
-  FormBuilder,
-  Validators,
-  Control,
-  ControlGroup,
-} from '@angular/common';
-import {
-  FORM_DIRECTIVES,
-  FormControl,
-  FormGroup
-} from '@angular/forms';
-
-import { RecipeService } from './services/recipe.service';
+import { FormBuilder } from '@angular/forms';
 import { RecipeI } from './services/recipe.store';
 // import { AppStore } from '../app/services/app.store';
 
-import { Rating } from './rating.component';
-
-import { MaterializeDirective } from "angular2-materialize";
-
 import {padStart} from "lodash";
+
+declare var Materialize: {updateTextFields:Function};
 
 @Component({
   moduleId: module.id,
   selector: 'recipe-detail',
   templateUrl: 'recipe-details.html',
   // directives: [Rating]
-  directives: [FORM_DIRECTIVES, MaterializeDirective, Rating]
 })
 export class RecipeDetailsComponent implements OnInit, OnChanges {
   selectedRecipeR: RecipeI;
@@ -203,7 +188,7 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
   /*
   * @todo remove empty or blacklisted tags or blacklisted chars
   */
-  onSubmit(recipe: RecipeI, next) {
+  onSubmit(recipe: RecipeI, next: {emit:Function}) {
     // validate submitted tags
     if (recipe.tags && recipe.tags.length) {
       let fTags = recipe.tags.filter((item, idx, ary) => {

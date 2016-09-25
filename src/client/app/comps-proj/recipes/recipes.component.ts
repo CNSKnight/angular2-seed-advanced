@@ -19,21 +19,16 @@ import {
 
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-// import { AppStore } from '../app/services/app.store';
-import { AppStoreI } from '../../frameworks/app/index';
+
+import { RecipesStoreI } from './recipes.module';
 
 import { RecipeI } from './services/recipe.store';
 import { RecipeService } from './services/recipe.service';
-import { RecipeListComponent } from './recipe-list.component';
-import { RecipeCardsComponent } from './recipe-cards.component';
-import { RecipeDetailsComponent } from './recipe-details.component';
 
 @Component({
   moduleId: module.id,
   selector: 'recipes',
-  providers: [],
   templateUrl: 'recipes.html',
-  directives: [RecipeDetailsComponent, RecipeListComponent, RecipeCardsComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['shared/recipes.component.css'],
   encapsulation: ViewEncapsulation.None
@@ -42,14 +37,14 @@ import { RecipeDetailsComponent } from './recipe-details.component';
 export class RecipesComponent implements OnInit, OnChanges {
   recipesR: Observable<RecipeI[]>;
 
-  selectedRecipeR: Observable<RecipeI>;
+  selectedRecipeR: Observable<any>;
 
   showCards: boolean = false;
 
   _id: number = null;
 
   constructor(private recipesService: RecipeService, // so that we can loadRecipes below
-              private store: Store<AppStoreI>) {
+              private store: Store<RecipesStoreI>) {
     // this.showCards = false;
 
     this.recipesService = recipesService;

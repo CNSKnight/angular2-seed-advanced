@@ -16,12 +16,11 @@ import {
 
 @Component({
   moduleId: module.id,
-  selector: 'rating',
-  templateUrl: 'rating.html',
-  directives: []
+  selector: 'rating-comp',
+  templateUrl: 'rating.html'
 })
 
-export class Rating {
+export class RatingComponent {
 
   @Input() rate: number;
 
