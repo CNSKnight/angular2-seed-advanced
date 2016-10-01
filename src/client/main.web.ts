@@ -6,6 +6,11 @@ import { enableProdMode } from '@angular/core';
 // The browser platform with a compiler
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
+// 29-SEP - idk why this works
+import 'jquery';
+import 'materialize';
+import 'angular2-materialize'
+
 // platfrom module
 import {WebModule} from './web.module';
 

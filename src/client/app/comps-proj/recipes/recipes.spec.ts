@@ -25,8 +25,8 @@ describe('Recipes', () => {
 
   describe('`recipes` store', () => {
     let initialState = [
-      { _id: 0, name: 'First Recipe' },
-      { _id: 1, name: 'Second Recipe' }
+      { id: 0, name: 'First Recipe' },
+      { id: 1, name: 'Second Recipe' }
     ];
 
     it('returns an empty array by default', () => {
@@ -43,7 +43,7 @@ describe('Recipes', () => {
     });
 
     it('`CREATE_RECIPE`', () => {
-      let payload = {_id: 2, name: 'added recipe'},
+      let payload = {id: 2, name: 'added recipe'},
           result = [...initialState, payload],
           stateItems = recipes(initialState, {type: 'CREATE_RECIPE', payload: payload});
 
@@ -51,15 +51,15 @@ describe('Recipes', () => {
     });
 
     it('`UPDATE_RECIPE`', () => {
-      let payload = { _id: 1, name: 'Updated Recipe' },
-          result = [ initialState[0], { _id: 1, name: 'Updated Recipe' } ],
+      let payload = { id: 1, name: 'Updated Recipe' },
+          result = [ initialState[0], { id: 1, name: 'Updated Recipe' } ],
           stateItems = recipes(initialState, {type: 'UPDATE_RECIPE', payload: payload});
 
       expect(stateItems).toEqual(result);
     });
 
     it('`DELETE_RECIPE`', () => {
-      let payload = { _id: 0 },
+      let payload = { id: 0 },
           result = [ initialState[1] ],
           stateItems = recipes(initialState, {type: 'DELETE_RECIPE', payload: payload});
 

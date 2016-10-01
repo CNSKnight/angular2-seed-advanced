@@ -2,7 +2,7 @@
  *ngFor="let recipe of recipesR" (click)="selectUA.emit(recipe)">
     <div>
         <span class="secondary-content left">
-            <i class="material-icons amber-text text-lighten-2" *ngIf="! recipe.published">visibility_off</i>
+            <i class="material-icons amber-text" *ngIf="! recipe.published">visibility_off</i>
             <i class="material-icons green-text" *ngIf="recipe.published">visibility</i>
         </span>
         {{recipe.title}}

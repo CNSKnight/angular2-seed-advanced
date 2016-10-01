@@ -12,6 +12,10 @@ import { LogService } from './services/log.service';
 import { RouterExtensions } from './services/router-extensions';
 import { WindowService } from './services/window.service';
 
+// temps
+// import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+// import { StoreLogMonitorModule, useLogMonitor } from '@ngrx/store-log-monitor';
+
 interface ICoreModuleOptions {
   window?: any;
   console?: any;
@@ -26,6 +30,15 @@ interface ICoreModuleOptions {
     CommonModule,
     RouterModule,
     HttpModule
+    // temps
+    // StoreDevtoolsModule.instrumentStore({
+    //   maxAge: 5,
+    //   monitor: useLogMonitor({
+    //     visible: true,
+    //     position: 'right'
+    //   })
+    // }),
+    // StoreLogMonitorModule
   ],
   declarations: [
     PlatformDirective
@@ -52,7 +65,7 @@ export class CoreModule {
       providers: configuredProviders
     };
   }
-  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
       throw new Error('CoreModule already loaded; Import in root module only.');
     }

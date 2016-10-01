@@ -1,9 +1,3 @@
-// ```
-// selectUA-recipe.reducer.js
-// (c) 2016 David Newman
-// blackshuriken@hotmail.com
-// selected-recipe.reducer.js may be freely distributed under the MIT license
-// ```
 import {ActionReducer, Action} from "@ngrx/store";
 
 import { AppConfig } from '../../../frameworks/sample/services/app-config';

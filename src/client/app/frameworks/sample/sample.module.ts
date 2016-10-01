@@ -13,6 +13,9 @@ import { NavbarComponent } from './components/navbar.component';
 import { nameListReducer, NameListService } from './services/name-list.service';
 import { MultilingualModule } from '../i18n/multilingual.module';
 import { multilingualReducer, MultilingualStateI } from '../i18n/services/multilingual.service';
+import { recipeModel, RecipeI } from '../../comps-proj/recipes/services/recipe.store';
+import { recipesReducer } from '../../comps-proj/recipes/services/recipes.reducer';
+import { selectedRecipeReducer } from '../../comps-proj/recipes/services/selected-recipe.reducer';
 import { RecipesModule } from '../../comps-proj/recipes/recipes.module';
 
 // state
@@ -32,7 +35,9 @@ export interface AppStoreI {
     MultilingualModule,
     StoreModule.provideStore({
       i18n: multilingualReducer,
-      names: nameListReducer
+      names: nameListReducer,
+      recipesR: recipesReducer,
+      selectedRecipeR: selectedRecipeReducer
     }),
     RecipesModule
   ],
@@ -41,7 +46,7 @@ export interface AppStoreI {
     NavbarComponent
   ],
   providers: [
-    NameListService
+    NameListService,
   ],
   exports: [
     ToolbarComponent,

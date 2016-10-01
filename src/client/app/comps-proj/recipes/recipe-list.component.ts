@@ -30,7 +30,7 @@ import { RecipeI } from './services/recipe.store';
 export class RecipeListComponent implements OnInit, OnChanges {
   selectedRecipe: RecipeI; // binder matches inherited property
 
-  // The RecipesComponent hands off `recipesR` (and `selectedRecipeR`)
+  // The RecipesComponent hands-off `recipesR` (and `selectedRecipeR`)
   // via property bindings to its child components
   // Here we pick up the `recipesR` collection by annotating our local
   // `recipesR` property with `@Input()`
@@ -61,6 +61,6 @@ export class RecipeListComponent implements OnInit, OnChanges {
   }
 
   isSelected(which: any) {
-    return (this.selectedRecipe && which._id == this.selectedRecipe._id);
+    return (this.selectedRecipe && which.id == this.selectedRecipe.id);
   }
 }

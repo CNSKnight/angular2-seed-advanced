@@ -1,4 +1,5 @@
-<li class="card" style="overflow: hidden;" *ngFor="let recipe of recipesR" (click)="selectUA.emit(recipe)">
+<li class="card {{isSelected(recipe) ? 'active' : ''}}" style="overflow: hidden;"
+ *ngFor="let recipe of recipesR" (click)="selectUA.emit(recipe)">
     <div class="card-image waves-effect waves-block waves-light">
         <img class="activator" src="images/office.jpg">
     </div>
@@ -18,7 +19,7 @@
     <div class="card-reveal" style="display: none; transform: translateY(0px);">
         <span class="card-title grey-text text-darken-4">Card Title <i class="material-icons right">close</i></span>
         <div>
-            <rating [interactive]="false" [rate]="recipe.rating"></rating>
+            <rating-comp [interactive]="false" [rate]="recipe.rating"></rating-comp>
             {{recipe.rating}}
         </div>
         <div>

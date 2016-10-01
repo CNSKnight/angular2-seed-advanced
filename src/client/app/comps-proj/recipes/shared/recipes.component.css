@@ -1,3 +1,9 @@
+.mb-sm {
+margin-bottom: .5rem;
+}
+.mb-0 {
+margin-bottom: 0;
+}
 .sr-only {
   position: absolute;
   width: 1px;
@@ -25,10 +31,30 @@
 }
 .recipes.collection .collection-item,
 .recipes.collection .card {
-      border-left: 5px transparent;
-      padding-left: 25px;
+      border-left: 5px solid transparent;
+      /*padding-left: 25px*/;
+      cursor: pointer;
 }
 .recipes.collection .collection-item.active,
 .recipes.collection .card.active {
-  border-left-color: solid rgb(238, 110, 115);
+  border-left-color: rgb(0, 150, 136);
+}
+.recipes.collection .collection-item.active {
+  background: inherit;
+}
+.recipes.collection .collection-item.active,
+.recipes.collection .collection-item.active .secondary-content {
+  color: rgb(0, 150, 136);
+}
+legend, .legend {
+  color: rgb(0, 150, 136);
+}
+.recipe-card [ngmodelgroup] + [ngmodelgroup] {
+  border-top: 3px solid rgb(178, 223, 219);
+}
+.recipe-card fieldset .row {
+  margin-bottom: 0;
+}
+.recipe-card fieldset .row:last-child {
+  margin-bottom:.5rem;
 }

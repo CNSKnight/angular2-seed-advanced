@@ -22,7 +22,7 @@ import { Store } from '@ngrx/store';
 
 import { RecipesStoreI } from './recipes.module';
 
-import { RecipeI } from './services/recipe.store';
+import { recipeModel, RecipeI } from './services/recipe.store';
 import { RecipeService } from './services/recipe.service';
 
 @Component({
@@ -35,75 +35,72 @@ import { RecipeService } from './services/recipe.service';
 })
 // snippets: https://marketplace.visualstudio.com/items?itemName=johnpapa.@angular
 export class RecipesComponent implements OnInit, OnChanges {
-  recipesR: Observable<RecipeI[]>;
-
-  selectedRecipeR: Observable<any>;
+  rModel: RecipeI;
+  recipesR: Observable<{}>;
+  // @Input() recipesR: Observable<{}>;
+  // @Output() recipesR: Observable<{}>;
+  selectedRecipeR: Observable<{}>;
 
   showCards: boolean = false;
 
-  _id: number = null;
+  id: number = null;
 
   constructor(private recipesService: RecipeService, // so that we can loadRecipes below
-              private store: Store<RecipesStoreI>) {
-    // this.showCards = false;
+    private store: Store<RecipesStoreI>) {
+    this.rModel = recipeModel;
 
     this.recipesService = recipesService;
-  
+
     // Bind to the subscribed `recipesR` ~observable~ behavior subject from the store
     this.recipesR = recipesService.recipesR;
     // this.recipesR = store.select('recipesR');
+    this.recipesR.subscribe(r => console.log('recipesR', r));
 
     // Binds/sets up the unsubscribed `selectedRecipe` observable from the store,
     // for our subcomponent(s)
     this.selectedRecipeR = store.select('selectedRecipeR');
 
+    this.resetRecipe();
     // DEBUG
     console.log(this.selectedRecipeR);
     this.selectedRecipeR.subscribe(v => console.log('selectedRecipeR: ', v));
-
   }
 
   // `recipeService.loadRecipes` dispatches the `ADD_RECIPES` event
   // to our store which in turn updates the `recipesS` collection
   ngOnInit() {
-    if (! this.recipesService.loadRecipe()) {
+    if (!this.recipesService.loadRecipe()) {
       this.recipesService.loadRecipes();
     }
   }
 
-  ngOnChanges(changed:any) {
+  ngOnChanges(changed: any) {
+    this.recipesR.subscribe(r => console.log('recipesR', r));
   }
 
-  toggle(what:string) {
+  toggle(what: string) {
     if (what == 'cards') {
       this.showCards = (this.showCards ? false : true);
     }
   }
 
-  selectRecipe(recipe:RecipeI) {
+  selectRecipe(recipe: RecipeI) {
     this.store.dispatch({
       type: 'SELECT_RECIPE',
       payload: recipe
     });
   }
 
-  deleteRecipe(recipe:RecipeI) {
+  deleteRecipe(recipe: RecipeI) {
     this.recipesService.deleteRecipe(recipe);
   }
 
   resetRecipe() {
-    let emptyRecipe:RecipeI = {
-      _id: null,
-      creator: '',
-      description: '',
-      ingredients: [],
-      method: [],
-      published: false,
-      rating: null,
-      subTitle: '',
-      tags: [],
-      title: ''
-    };
+    // clone the model and empty the Arrays
+    let emptyRecipe: RecipeI =
+      _.transform(this.rModel, (accum, val, idx) => {
+        accum[idx] = _.isArray(val) ? [] : val;
+      }, {});
 
     this.store.dispatch({
       type: 'SELECT_RECIPE',
@@ -111,7 +108,7 @@ export class RecipesComponent implements OnInit, OnChanges {
     });
   }
 
-  saveRecipe(recipe:RecipeI) {
+  saveRecipe(recipe: RecipeI) {
     this.recipesService.saveRecipe(recipe);
     this.resetRecipe();
   }

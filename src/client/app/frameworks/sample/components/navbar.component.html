@@ -1,6 +1,16 @@
-<nav>
-  <a [routerLink]="['/']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">{{'HOME' | translate}}</a>
-  <a [routerLink]="['/about']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">{{'ABOUT' | translate}}</a>
-  <a [routerLink]="['/recipes']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">{{'RECIPES' | translate}}</a>
+<nav class="col s12 light-green">
+  <div class="nav-wrapper">
+    <a href="#" class="brand-logo">VegRDS</a>
+    <a href="#" data-activates="mobile-demo" class="button-collapse right"><i class="material-icons">menu</i></a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a [routerLink]="['/']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">{{'HOME' | translate}}</a></li>
+      <li><a [routerLink]="['/about']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">{{'ABOUT' | translate}}</a></li>
+      <li><a [routerLink]="['/recipes']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">{{'RECIPES' | translate}}</a></li>
+    </ul>
+    <ul class="side-nav" id="mobile-demo">
+      <li><a [routerLink]="['/']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">{{'HOME' | translate}}</a></li>
+      <li><a [routerLink]="['/about']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">{{'ABOUT' | translate}}</a></li>
+      <li><a [routerLink]="['/recipes']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">{{'RECIPES' | translate}}</a></li>
+    </ul>
+  </div>
 </nav>
-

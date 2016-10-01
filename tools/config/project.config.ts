@@ -23,15 +23,12 @@ export class ProjectConfig extends SeedAdvancedConfig {
 
     // Add `NPM` third-party libraries to be injected/bundled.
     this.NPM_DEPENDENCIES = [
-      ...this.NPM_DEPENDENCIES,
-      { src: 'jquery/dist/*', inject: true },
-      { src: 'angular2-materialize/dist/*', inject: true },
-      { src: 'materialize-css/dist/**/*', inject: true }
+      ...this.NPM_DEPENDENCIES
     ];
 
     // Add `local` third-party libraries to be injected/bundled.
     this.APP_ASSETS = [
-      ...this.APP_ASSETS
+      ...this.APP_ASSETS,
       // {src: `${this.APP_SRC}/your-path-to-lib/libs/jquery-ui.js`, inject: true, vendor: false}
       // {src: `${this.CSS_SRC}/path-to-lib/test-lib.css`, inject: true, vendor: false},
     ];
@@ -42,19 +39,28 @@ export class ProjectConfig extends SeedAdvancedConfig {
       },
       map: {
         // node_modules/ inferred
-        materialize: 'materialize-css',
-        'angular2-materialize': 'angular2-materialize',
-        jquery: 'jquery',
+        // @see main.web.ts imports
+        jquery: 'jquery/dist/jquery.min',
+        materialize: 'materialize-css/dist',
+        'angular2-materialize': 'angular2-materialize/dist',
         acapFPkg: `${this.ACAPF_BASE}core/templates/js/acapF-package.source.js`
       },
       packages: {
         materialize: {
           format: 'global',
-          main: 'dist/js/materialize',
+          main: 'js/materialize.min',
           defaultExtension: 'js'
         },
         'angular2-materialize': {
-          main: 'dist/index',
+          main: 'index',
+          defaultExtension: 'js'
+        },
+        '@ngrx/store-devtools': {
+          main: 'index',
+          defaultExtension: 'js'
+        },
+        '@ngrx/store-log-monitor': {
+          main: 'index',
           defaultExtension: 'js'
         }
       },
@@ -72,6 +78,7 @@ export class ProjectConfig extends SeedAdvancedConfig {
     });
 
     this.SYSTEM_BUILDER_CONFIG.paths['acap'] = `${this.ACAPF_BASE}core/templates`;
+    this.SYSTEM_BUILDER_CONFIG.paths['materialize-css'] = 'node_modules/materialize-css';
     this.SYSTEM_BUILDER_CONFIG.paths['angular2-materialize'] = 'node_modules/angular2-materialize';
 
     /* Add to or override NPM module configurations: */

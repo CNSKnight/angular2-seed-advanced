@@ -49,8 +49,7 @@ export const recipesReducer : ActionReducer<RecipeI[]> = (state : RecipeI[] = []
     // a new object using `Object.assign`
     case 'UPDATE_RECIPE':
       return state.map((recipe: RecipeI) => {
-
-        return recipe._id === payload._id
+        return recipe.id === payload.id
           ? Object.assign({}, recipe, payload) : recipe;
       });
 
@@ -60,7 +59,7 @@ export const recipesReducer : ActionReducer<RecipeI[]> = (state : RecipeI[] = []
 
       return state.filter((recipe: RecipeI) => {
 
-        return recipe._id !== payload._id;
+        return recipe.id !== payload.id;
       });
 
     default:
