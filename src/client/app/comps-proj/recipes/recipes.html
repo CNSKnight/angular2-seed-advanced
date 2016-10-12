@@ -22,4 +22,7 @@
         <recipe-detail (saveUA)="saveRecipe($event)" (cancelUA)="resetRecipe($event)" [selectedRecipeR]="selectedRecipeR | async">Choose recipe from list...
         </recipe-detail>
     </div>
+    <recipe-preview [selectedRecipeR]="selectedRecipeR | async">
+        
+    </recipe-preview>
 </div>

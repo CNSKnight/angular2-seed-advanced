@@ -92,18 +92,6 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
     return 'Step #'.concat(_.padStart((idx + 1).toString(), 2, '0'));
   }
 
-  // Whenever the user needs to add a new `tag`, push an
-  // empty `tag` object onto the `tags` array on the
-  // `selectedRecipe`
-  newTag() {
-    // Check to see if the `tags` array exists before
-    // attempting to push a `tag` to it
-    this.recipe.tags || (this.recipe.tags = []);
-    let tag = _.clone(this.rModel.tags[0]);
-    tag.priority = this.recipe.tags.length;
-    this.recipe.tags.push(tag);
-  }
-
   // Whenever the user needs to add a new `ingredient`, push an
   // empty `ingredient` object to the `ingredient` array on the
   // `selectedRecipe`
@@ -128,10 +116,16 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
     this.recipe.method.push(_.clone(this.rModel.method[0]));
   }
 
-  onChangeRate(value: number) {
-    // Set the value of the selectUA recipe's rating to the
-    // value passed up from the `rating` component
-    this.recipe.rating = value;
+  // Whenever the user needs to add a new `tag`, push an
+  // empty `tag` object onto the `tags` array on the
+  // `selectedRecipe`
+  newTag() {
+    // Check to see if the `tags` array exists before
+    // attempting to push a `tag` to it
+    this.recipe.tags || (this.recipe.tags = []);
+    let tag = _.clone(this.rModel.tags[0]);
+    tag.priority = this.recipe.tags.length;
+    this.recipe.tags.push(tag);
   }
 
   deleteTag(idx: number) {
@@ -156,6 +150,12 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
 
   orderTags() {
     // @todo
+  }
+
+  onChangeRate(value: number) {
+    // Set the value of the selectUA recipe's rating to the
+    // value passed up from the `rating` component
+    this.recipe.rating = value;
   }
 
   /*
