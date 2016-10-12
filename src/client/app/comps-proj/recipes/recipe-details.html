@@ -149,8 +149,8 @@
         </button>
       </div>
       <div class="col s4 center-align">
-        <a class="btn waves-effect waves-light modal-trigger" *ngIf="! rdForm.valid"
-         materialize="leanModal" [materializeParams]="[{dismissible: false}]" href="#rPrevModal">Preview</a>
+        <a class="btn waves-effect waves-light light-green lighten-3 modal-trigger" *ngIf="recipe.id && rdForm.valid"
+         materialize="leanModal" [materializeParams]="[{dismissible: true, starting_top:'1%', ending_top: '5%'}]" href="#rPrevModal">Preview</a>
       </div>
       <div class="col s4 center-align">
         <button class="btn waves-effect waves-light" type="submit" [disabled]="! rdForm.valid">

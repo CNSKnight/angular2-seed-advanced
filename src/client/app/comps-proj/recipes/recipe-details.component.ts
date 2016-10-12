@@ -1,8 +1,6 @@
 // ```
-// recipes.component.js
-// (c) 2016 David Newman
-// blackshuriken@hotmail.com
-// recipes.component.js may be freely distributed under the MIT license
+// recipe-details.component.js
+// (c) 2016 Codename: Steeve Knight
 // ```
 
 // # Recipes Component
@@ -112,8 +110,9 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
     // attempting to push a `method` to it
     if (!this.recipe.method)
       this.recipe.method = [];
-
-    this.recipe.method.push(_.clone(this.rModel.method[0]));
+    let method = _.clone(this.rModel.method[0]);
+    method.step = this.recipe.method.length + 1;
+    this.recipe.method.push(method);
   }
 
   // Whenever the user needs to add a new `tag`, push an

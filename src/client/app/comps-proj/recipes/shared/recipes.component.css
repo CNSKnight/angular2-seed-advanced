@@ -58,3 +58,10 @@ legend, .legend {
 .recipe-card fieldset .row:last-child {
   margin-bottom:.5rem;
 }
+recipes .modal {
+  max-height: 97%;
+}
+.modal-footer p {
+  line-height:2em;
+  padding: 0 1em;
+}
