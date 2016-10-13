@@ -5,7 +5,7 @@
 // recipes.reducer.js may be freely distributed under the MIT license
 // ```
 
-import {ActionReducer, Action} from "@ngrx/store";
+import {ActionReducer, Action} from '@ngrx/store';
 
 // ** Import our `recipe` store
 import { RecipeI } from './recipe.store';

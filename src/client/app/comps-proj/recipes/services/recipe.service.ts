@@ -52,7 +52,7 @@ export class RecipeService {
 
   // used w/in listing context to load all
   loadRecipes() {
-    let res = this.http.get(this.apiBase)
+    return this.http.get(this.apiBase)
       // map the `HTTP` response from `raw` to `JSON` format
       // using `RxJs`
       // Reference: https://github.com/Reactive-Extensions/RxJS

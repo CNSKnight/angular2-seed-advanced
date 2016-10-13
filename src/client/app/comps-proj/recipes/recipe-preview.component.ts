@@ -10,7 +10,6 @@ import {
   Input,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy,
   OnInit,
   OnChanges
 } from '@angular/core';
@@ -39,8 +38,5 @@ export class RecipePreviewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changed: any) {
-  }
-
-  ngAfterViewChecked() {
   }
 }

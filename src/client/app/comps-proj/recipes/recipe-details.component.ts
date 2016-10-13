@@ -11,12 +11,13 @@ import {
   Output,
   EventEmitter,
   OnInit,
-  OnChanges
+  OnChanges,
+  AfterViewChecked
 } from '@angular/core';
 import { recipeModel, RecipeI } from './services/recipe.store';
 // import { AppStore } from '../app/services/app.store';
 
-import {padStart} from "lodash";
+import {padStart} from 'lodash';
 
 declare var Materialize: { updateTextFields: Function };
 
@@ -26,7 +27,7 @@ declare var Materialize: { updateTextFields: Function };
   templateUrl: 'recipe-details.html',
   // directives: [Rating]
 })
-export class RecipeDetailsComponent implements OnInit, OnChanges {
+export class RecipeDetailsComponent implements OnInit, OnChanges, AfterViewChecked {
   selectedRecipeR: RecipeI;
   rModel: RecipeI;
   originalTitle: string;

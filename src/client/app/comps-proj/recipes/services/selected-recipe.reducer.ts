@@ -1,4 +1,4 @@
-import {ActionReducer, Action} from "@ngrx/store";
+import {ActionReducer, Action} from '@ngrx/store';
 
 import { AppConfig } from '../../../frameworks/sample/services/app-config';
 // # Redux interface/reducer for `recipes`
@@ -26,4 +26,4 @@ export const selectedRecipeReducer : ActionReducer<RecipeI[]> = (state : RecipeI
     default:
       return state;
   }
-}
+};

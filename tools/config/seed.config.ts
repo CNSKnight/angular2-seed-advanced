@@ -556,7 +556,7 @@ export class SeedConfig {
         rebaseUrls: false
       }
     }
-  }
+  };
 
   /**
    * Recursively merge source onto target.

@@ -5,8 +5,8 @@ import { FormsModule, FormBuilder } from '@angular/forms';
 import { RecipeI } from './services/recipe.store';
 import { RecipeService } from './services/recipe.service';
 import { recipesComps } from './recipes.comps';
-import { recipesReducer } from './services/recipes.reducer';
-import { MaterializeDirective } from "angular2-materialize";
+// import { recipesReducer } from './services/recipes.reducer';
+import { MaterializeDirective } from 'angular2-materialize';
 
 export interface RecipesStoreI {
     recipes: RecipeI[];

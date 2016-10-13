@@ -13,12 +13,8 @@ import {
   OnChanges,
   Input,
   Output,
-  EventEmitter,
-  ChangeDetectionStrategy
+  EventEmitter
 } from '@angular/core';
-
-import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
 
 import { RecipeI } from './services/recipe.store';
 

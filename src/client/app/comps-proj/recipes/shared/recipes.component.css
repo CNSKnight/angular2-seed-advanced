@@ -1,8 +1,8 @@
 .mb-sm {
-margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 .mb-0 {
-margin-bottom: 0;
+  margin-bottom: 0;
 }
 .sr-only {
   position: absolute;
@@ -24,16 +24,16 @@ margin-bottom: 0;
   clip: auto;
 }
 .secondary-content.left {
-  margin-right:.5em;
+  margin-right: 0.5em;
 }
 .action-bar i.medium {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
 .recipes.collection .collection-item,
 .recipes.collection .card {
-      border-left: 5px solid transparent;
-      /*padding-left: 25px*/;
-      cursor: pointer;
+  border-left: 5px solid transparent;
+  /*padding-left: 25px*/;
+  cursor: pointer;
 }
 .recipes.collection .collection-item.active,
 .recipes.collection .card.active {
@@ -56,12 +56,12 @@ legend, .legend {
   margin-bottom: 0;
 }
 .recipe-card fieldset .row:last-child {
-  margin-bottom:.5rem;
+  margin-bottom: 0.5rem;
 }
 recipes .modal {
   max-height: 97%;
 }
 .modal-footer p {
-  line-height:2em;
+  line-height: 2em;
   padding: 0 1em;
 }
