@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, FormBuilder } from '@angular/forms';
-import { StoreModule } from '@ngrx/store';
 
-import { recipeModel, RecipeI } from './services/recipe.store';
+import { RecipeI } from './services/recipe.store';
 import { RecipeService } from './services/recipe.service';
 import { recipesComps } from './recipes.comps';
 import { recipesReducer } from './services/recipes.reducer';

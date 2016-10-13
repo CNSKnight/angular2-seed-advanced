@@ -7,14 +7,11 @@
 
 // # Recipe List Component
 
-import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
 import {
   Component,
   Input,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy,
   OnInit,
   OnChanges
 } from '@angular/core';

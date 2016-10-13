@@ -5,7 +5,6 @@
 
 // # Recipes Component
 
-import { Store } from '@ngrx/store';
 import {
   Component,
   Input,
@@ -26,7 +25,7 @@ declare var Materialize: { updateTextFields: Function };
   // directives: [Rating]
 })
 export class RecipePreviewComponent implements OnInit, OnChanges {
-  @Input('selectedRecipeR') recipe: RecipeI;
+  @Input() recipe: RecipeI;
 
   // Allow the user to save/delete a `recipe or cancel the
   // operation. Flow events up from here.

@@ -9,6 +9,7 @@
 
 import {
   Component,
+  OnInit,
   OnChanges,
   Input,
   Output,
@@ -27,7 +28,7 @@ import { RecipeI } from './services/recipe.store';
   templateUrl: 'recipe-card.html'
 })
 
-export class RecipeCardsComponent implements OnChanges {
+export class RecipeCardsComponent implements OnInit, OnChanges {
   selectedRecipe: RecipeI; // binder matches inherited property
 
   // The RecipesComponent hands-off `recipesR` (and `selectedRecipeR`)

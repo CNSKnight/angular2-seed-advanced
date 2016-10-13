@@ -5,14 +5,11 @@
 
 // # Recipes Component
 
-import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
 import {
   Component,
   Input,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy,
   OnInit,
   OnChanges
 } from '@angular/core';
@@ -40,8 +37,8 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
   // Perform additional logic on every update via ES6 setter
   // Create a copy of `_recipe` and assign it to `this.selectedRecipe`
   // to which we will use to bind our form
-  // @Input('test') selectedRecipeR: RecipeI;
-  @Input('selectedRecipeR')
+  // recipe is bound in the parent template as recipe from its selectedRecipeR
+  @Input('recipe')
   set _recipe(recipe: RecipeI) {
     recipe && (this.originalTitle = recipe.title);
     this.recipe = Object.assign(_.cloneDeep(this.rModel), recipe || {});
@@ -87,7 +84,7 @@ export class RecipeDetailsComponent implements OnInit, OnChanges {
   }
 
   getTALabel(idx: number) {
-    return 'Step #'.concat(_.padStart((idx + 1).toString(), 2, '0'));
+    return 'Step #'.concat(padStart((idx + 1).toString(), 2, '0'));
   }
 
   // Whenever the user needs to add a new `ingredient`, push an

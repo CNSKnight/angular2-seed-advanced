@@ -10,9 +10,6 @@ import {
   Component,
   OnInit,
   OnChanges,
-  Input,
-  Output,
-  EventEmitter,
   ChangeDetectionStrategy,
   ViewEncapsulation
 } from '@angular/core';
