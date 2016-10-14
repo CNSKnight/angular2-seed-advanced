@@ -4,6 +4,22 @@ import { argv } from 'yargs';
 
 import { Environments, InjectableDependency } from './seed.config.interfaces';
 
+/************************* DO NOT CHANGE ************************
+ *
+ * DO NOT make any changes in this file because it will
+ * make your migration to newer versions of the seed harder.
+ *
+ * Your application-specific configurations should be
+ * in project.config.ts. If you need to change any tasks
+ * from "./tasks" overwrite them by creating a task with the
+ * same name in "./projects". For further information take a
+ * look at the documentation:
+ *
+ * 1) https://github.com/mgechev/angular-seed/tree/master/tools
+ * 2) https://github.com/mgechev/angular-seed/wiki
+ *
+ *****************************************************************/
+
 /**
  * The enumeration of available environments.
  * @type {Environments}
@@ -71,6 +87,22 @@ export class SeedConfig {
   * NB: this must match what is configured in ./karma.conf.js
   */
   COVERAGE_DIR = 'coverage';
+
+  /**
+   * Karma reporter configuration
+   */
+  KARMA_REPORTERS: any = {
+    preprocessors: {
+      'dist/**/!(*spec).js': ['coverage']
+    },
+    reporters: ['mocha', 'coverage'],
+    coverageReporter: {
+      dir: this.COVERAGE_DIR + '/',
+      reporters: [
+        {type: 'json', subdir: '.', file: 'coverage-final.json'}
+      ]
+    }
+  };
 
   /**
    * The path for the base of the application at runtime.
@@ -280,11 +312,6 @@ export class SeedConfig {
   VERSION_NODE = '5.0.0';
 
   /**
-   * The ruleset to be used by `codelyzer` for linting the TypeScript files.
-   */
-  CODELYZER_RULES = customRules();
-
-  /**
    * The flag to enable handling of SCSS files
    * The default value is false. Override with the '--scss' flag.
    * @type {boolean}
@@ -299,7 +326,8 @@ export class SeedConfig {
     { src: 'zone.js/dist/zone.js', inject: 'libs' },
     { src: 'core-js/client/shim.min.js', inject: 'shims' },
     { src: 'systemjs/dist/system.src.js', inject: 'shims', env: ENVIRONMENTS.DEVELOPMENT },
-    { src: 'rxjs/bundles/Rx.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
+    // Temporary fix. See https://github.com/angular/angular/issues/9359
+    { src: '.tmp/Rx.min.js', inject: 'libs', env: ENVIRONMENTS.DEVELOPMENT },
   ];
 
   /**
@@ -360,16 +388,12 @@ export class SeedConfig {
         'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic-testing.umd.js',
       '@angular/router/testing': 'node_modules/@angular/router/bundles/router-testing.umd.js',
 
-      'rxjs/*': 'node_modules/rxjs/*',
       'app/*': '/app/*',
       // For test config
       'dist/dev/*': '/base/dist/dev/*',
       '*': 'node_modules/*'
     },
     packages: {
-      rxjs: {
-        defaultExtension: 'js'
-      }
     }
   };
 
@@ -386,12 +410,14 @@ export class SeedConfig {
    */
   SYSTEM_BUILDER_CONFIG: any = {
     defaultJSExtensions: true,
+    base: this.PROJECT_ROOT,
     packageConfigPaths: [
-      join(this.PROJECT_ROOT, 'node_modules', '*', 'package.json'),
-      join(this.PROJECT_ROOT, 'node_modules', '@angular', '*', 'package.json')
+      join('node_modules', '*', 'package.json'),
+      join('node_modules', '@angular', '*', 'package.json')
     ],
     paths: {
       [`${this.TMP_DIR}/*`]: `${this.TMP_DIR}/*`,
+      'node_modules/*': 'node_modules/*',
       '*': 'node_modules/*'
     },
     packages: {
@@ -432,6 +458,7 @@ export class SeedConfig {
         defaultExtension: 'js'
       },
       'rxjs': {
+        main: 'Rx.js',
         defaultExtension: 'js'
       }
     }
@@ -494,29 +521,6 @@ export class SeedConfig {
     'browser-sync': {
       middleware: [require('connect-history-api-fallback')({
         index: `${this.APP_BASE}index.html`
-        // rewrites: [
-        //   {
-        //     from: new RegExp(`^${this.NPM_BASE}.*$`),
-        //     to: (context:any) => context.parsedUrl.pathname
-        //   },
-        //   {
-        //     from: new RegExp(`^\/${this.BOOTSTRAP_DIR}\/.*$`),
-        //     to: (context:any) => context.parsedUrl.pathname
-        //   },
-        //   {
-        //     from: new RegExp(`^${this.APP_BASE}${this.APP_SRC}\/.*$`),
-        //     to: (context:any) => context.parsedUrl.pathname
-        //   },
-        //   {
-        //     from: new RegExp(`^${this.ASSETS_SRC.replace(this.APP_SRC, '')}\/.*$`),
-        //     to: (context:any) => context.parsedUrl.pathname
-        //   },
-        //   {
-        //     from: new RegExp(`^${this.CSS_DEST.replace(this.APP_DEST, '')}\/.*$`),
-        //     to: (context:any) => `/${slash(join(this.APP_DEST, context.parsedUrl.pathname))}`
-        //   }
-        // ],
-        // disableDotRule: true
       })],
       port: this.PORT,
       startPath: this.APP_BASE,
@@ -619,15 +623,6 @@ function filterDependency(env: string, d: InjectableDependency): boolean {
 function appVersion(): number | string {
   var pkg = require('../../package.json');
   return pkg.version;
-}
-
-/**
- * Returns the linting configuration to be used for `codelyzer`.
- * @return {string[]} The list of linting rules.
- */
-function customRules(): string[] {
-  var lintConf = require('../../tslint.json');
-  return lintConf.rulesDirectory;
 }
 
 /**

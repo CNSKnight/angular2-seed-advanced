@@ -3,6 +3,12 @@ import { NgModule } from '@angular/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { Http } from '@angular/http';
+
+// libs
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 
 // app
 import { AppComponent } from './app/comps-proj/app.component';
@@ -13,13 +19,22 @@ import { routes } from './app/comps-proj/app.routes';
 // feature modules
 import { CoreModule } from './app/frameworks/core/core.module';
 import { AnalyticsModule } from './app/frameworks/analytics/analytics.module';
+import { multilingualReducer, MultilingualEffects } from './app/frameworks/i18n/index';
 import { MultilingualModule } from './app/frameworks/i18n/multilingual.module';
 import { SampleModule } from './app/frameworks/sample/sample.module';
+import { nameListReducer, NameListEffects } from './app/frameworks/sample/index';
+
+import { recipesReducer } from './app/comps-proj/recipes/services/recipes.reducer';
+import { selectedRecipeReducer } from './app/comps-proj/recipes/services/selected-recipe.reducer';
+import { RecipesModule } from './app/comps-proj/recipes/recipes.module';
 
 // config
 import { Config, WindowService, ConsoleService } from './app/frameworks/core/index';
 Config.PLATFORM_TARGET = Config.PLATFORMS.WEB;
-Config.DEBUG.LEVEL_4 = true;
+if (String('<%= ENV %>') === 'dev') {
+  // only output console logging in dev mode
+  Config.DEBUG.LEVEL_4 = true;
+}
 
 // sample config (extra)
 import { AppConfig } from './app/frameworks/sample/services/app-config';
@@ -44,8 +59,21 @@ if (String('<%= TARGET_DESKTOP %>') === 'true') {
     ]),
     routerModule,
     AnalyticsModule,
-    MultilingualModule,
-    SampleModule
+    MultilingualModule.forRoot([{
+      provide: TranslateLoader,
+      deps: [Http],
+      useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18n', '.json')
+    }]),
+    SampleModule,
+    StoreModule.provideStore({
+      i18n: multilingualReducer,
+      names: nameListReducer,
+      recipesR: recipesReducer,
+      selectedRecipeR: selectedRecipeReducer
+    }),
+    EffectsModule.run(MultilingualEffects),
+    EffectsModule.run(NameListEffects),
+    RecipesModule
   ],
   declarations: [
     AppComponent,
