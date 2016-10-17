@@ -156,6 +156,46 @@ OR...
 
 * [GenyMotion Android Emulator](https://www.genymotion.com/)
 
+##### Building with Webpack for release builds
+
+You can greatly reduce the final size of your NativeScript app by the following:
+
+```
+cd nativescript
+npm i nativescript-dev-webpack --save-dev
+```
+Then you will need to modify your components to *not* use `moduleId: module.id` and change `templateUrl` to true relative app, for example:
+
+before:
+
+```
+@BaseComponent({
+  moduleId: module.id,
+  selector: 'sd-home',
+  templateUrl: 'home.component.html',
+  styleUrls: ['home.component.css']
+})
+```
+after:
+
+```
+@BaseComponent({
+  // moduleId: module.id,
+  selector: 'sd-home',
+  templateUrl: './app/components/home/home.component.html',
+  styleUrls: ['./app/components/home/home.component.css']
+})
+```
+
+Then to build:
+
+Ensure you are in the `nativescript` directory when running these commands.
+
+* iOS: `WEBPACK_OPTS="--display-error-details" tns build ios --bundle`
+* Android: `WEBPACK_OPTS="--display-error-details" tns build android --bundle`
+
+Notice your final build will be drastically smaller. In some cases 120 MB -> ~28 MB. 👍 
+
 ## Electron App
 
 #### Develop
