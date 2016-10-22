@@ -3,11 +3,11 @@
   padding: 0 16px;
 }
 
-:host input {
+input {
   width: 250px;
 }
 
-:host ul {
+ul {
   list-style-type: none;
   padding: 0 0 0 8px;
 }
@@ -23,12 +23,12 @@
   top: 16px;
 }
 
-:host a.link {
+a.link {
   color: #00e;
   cursor: pointer;
   text-decoration: underline;
 }
 
-:host a.link:hover {
+a.link:hover {
   color: #f00;
 }
